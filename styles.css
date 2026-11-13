@@ -89,28 +89,19 @@ h1 i,h2 i,h3 i{font-weight:400}
 .edit-copy p{font-size:15px;line-height:1.95;color:var(--muted);max-width:360px;margin:0 0 30px}
 .edit-aside{display:block;margin-top:64px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8f887b}
 
-/* ---------- the looks ---------- */
-.looks-index{background:#f0efe9;padding:clamp(110px,16vh,150px) var(--gutter) clamp(100px,14vh,140px)}
-.look-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 22px;max-width:1240px;margin:0 auto}
-.ph{position:relative;overflow:hidden;background:#e9e7e0;aspect-ratio:4/5}
-.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
-.ph--square{aspect-ratio:1/1}
-.look-card:hover .ph img,.closeup:hover .ph img{transform:scale(1.03)}
-.look-no{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text);margin-top:14px}
-.look-name{display:block;font:400 22px/1.25 var(--serif);margin-top:6px}
-.look-card--all{display:flex;flex-direction:column;justify-content:center;gap:12px;aspect-ratio:4/5;border:1px solid var(--line);padding:28px;transition:background .4s}
-.look-card--all span{font:400 30px var(--serif)}
-.look-card--all em{font-style:normal;font-size:22px;color:var(--gold);transition:transform .4s var(--ease)}
-.look-card--all:hover{background:var(--white)}
-.look-card--all:hover em{transform:translateX(6px)}
+/* ---------- the looks (home): journal style ---------- */
+.looks-index{background:#f0efe9;padding:clamp(110px,16vh,150px) var(--gutter) clamp(90px,12vh,120px)}
+.looks-index .journal-grid,.looks-index .journal-foot,.looks-index .section-head{max-width:1240px;margin-left:auto;margin-right:auto}
+.look-card{display:block;cursor:pointer}
+.inline-link{border-bottom:1px solid #b5a17e}
+.journal-foot a{color:var(--ink)}
+.journal-foot a:hover{color:var(--gold)}
 
-/* ---------- details (tagline) ---------- */
-.details{text-align:center;padding:clamp(120px,17vh,170px) var(--gutter);background:var(--white)}
-.house-mark{width:44px;margin:0 auto 26px}
-.details h2{font-size:clamp(46px,5.6vw,76px);line-height:1.02;letter-spacing:-.03em;margin:24px 0 70px}
-.closeups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;max-width:1240px;margin:0 auto;text-align:left}
-.closeup b{display:block;font:400 22px var(--serif);margin-top:14px}
-.closeup span{display:block;font-size:14px;color:var(--muted);line-height:1.6}
+/* ---------- signature ---------- */
+.details{text-align:center;padding:clamp(110px,16vh,150px) var(--gutter) clamp(120px,17vh,160px);background:var(--white)}
+.house-mark{width:48px;margin:0 auto 26px}
+.details h2{font-size:clamp(46px,5.6vw,76px);line-height:1.02;letter-spacing:-.03em;margin:24px 0 0}
+.signature-line{font-size:14px;color:var(--muted);margin:26px auto 0;max-width:420px}
 
 /* ---------- how to order ---------- */
 .order{display:grid;grid-template-columns:1fr .9fr;gap:10%;align-items:start;padding:clamp(110px,15vh,150px) 12%;background:#e9e7df}
@@ -181,7 +172,6 @@ body.is-locked{overflow:hidden}
 
 @media (min-width:1300px){.edits{padding-left:max(var(--gutter),calc((100vw - 1180px)/2));padding-right:max(var(--gutter),calc((100vw - 1180px)/2))}}
 @media (max-width:1000px){
-  .look-grid,.closeups{grid-template-columns:repeat(2,minmax(0,1fr))}
   .look-panel{grid-template-columns:1fr}
 }
 @media (max-width:760px){
@@ -205,11 +195,7 @@ body.is-locked{overflow:hidden}
   .edit-copy h3{font-size:clamp(48px,14vw,62px);margin:16px 0 18px}
   .edit-aside{margin-top:34px}
   .looks-index{padding:90px var(--gutter)}
-  .look-grid{gap:30px 12px}
-  .look-name{font-size:19px}
   .details{padding:100px var(--gutter)}
-  .details h2{margin-bottom:46px}
-  .closeups{gap:12px}
   .order{grid-template-columns:1fr;gap:34px;padding:90px var(--gutter)}
   .journal{padding:56px var(--gutter) 70px}
   .journal-head{grid-template-columns:1fr;gap:18px}

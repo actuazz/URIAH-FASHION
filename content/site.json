@@ -10,35 +10,8 @@
    "27": "55% 65%",
    "16": "40% 60%"
   },
-  "closeups": [
-   {
-    "file": "craft/print.webp",
-    "label": "Print",
-    "text": "Tonal lilac florals on a wide leg.",
-    "look": "look-02"
-   },
-   {
-    "file": "craft/lace.webp",
-    "label": "Lace",
-    "text": "Sheer sleeves over a woven bodice.",
-    "look": "look-07"
-   },
-   {
-    "file": "craft/texture.webp",
-    "label": "Texture",
-    "text": "A woven check, softly structured.",
-    "look": "look-06"
-   },
-   {
-    "file": "craft/sheen.webp",
-    "label": "Silk",
-    "text": "A silk ruffle that catches the light.",
-    "look": "look-04"
-   }
-  ],
   "hero": [
-   "02",
-   "03"
+   "18"
   ],
   "edits_head": {
    "kicker": "Explore the edits",
@@ -47,8 +20,8 @@
   },
   "edits": [
    {
-    "look": "look-01",
-    "photo": "03",
+    "look": "look-03",
+    "photo": "15",
     "overline": "The City Journal",
     "title": "Out in|the world.",
     "text": "Personal style in real places. Architectural lines, everyday streets and the moments between destinations.",
@@ -56,7 +29,7 @@
    },
    {
     "look": "look-04",
-    "photo": "21",
+    "photo": "22",
     "overline": "The Women's Edit",
     "title": "Softness|with shape.",
     "text": "Light, expressive pieces with a relaxed point of view. A little colour, a little movement, and an ease that feels personal.",
@@ -72,7 +45,7 @@
    },
    {
     "look": "look-02",
-    "photo": "06",
+    "photo": "07",
     "overline": "The Everyday Edit",
     "title": "Grounded|in expression.",
     "text": "Easy combinations, considered prints and pieces that feel like you. The everyday, with a little more intention.",
@@ -94,7 +67,12 @@
     "text": "Woven detail, sheer sleeves and a deeper palette. For evenings that ask for a little more presence.",
     "aside": "Lace / Weave / Evening"
    }
-  ]
+  ],
+  "hero_focus": "50% 74%",
+  "signature": {
+   "kicker": "Our signature",
+   "line": "For the way you move, the way you live, and the person you choose to be."
+  }
  },
  "photos": [
   {
@@ -283,10 +261,10 @@
    "id": "18",
    "title": "Under the signs",
    "alt": "Navy ruffle top and blue bag walking beneath road signs",
-   "width": 1600,
-   "height": 2667,
-   "hash": "f5f76337b373536f",
-   "source": "drive:18.png",
+   "width": 1333,
+   "height": 2000,
+   "hash": "6f6563a6b733132f",
+   "source": "upload:chater-road-clean.jpg",
    "look": "look-03"
   },
   {

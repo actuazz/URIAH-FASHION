@@ -83,7 +83,7 @@ def menu():
     return f'''<div class="menu" hidden data-menu>
   <button class="menu-close" data-menu-close>Close</button>
   <nav aria-label="Main">
-    <a href="index.html#edits">The Edits</a><a href="looks.html">The Looks</a><a href="index.html#details">The Details</a><a href="index.html#order">How to Order</a>
+    <a href="index.html#edits">The Edits</a><a href="looks.html">The Looks</a><a href="index.html#order">How to Order</a>
   </nav>
   <p class="menu-foot"><a href="{FB}" target="_blank" rel="noopener">Facebook ↗</a></p>
 </div>'''
@@ -130,7 +130,8 @@ def page(title, over_photo, body, site):
 # ---------- home ----------
 
 def hero(site, by_id):
-    panes = "".join(f'<div class="hero-pane hero-pane--{i}">{img(by_id[pid], "100vw", lazy=False)}</div>'
+    fp = site["features"].get("hero_focus")
+    panes = "".join(f'<div class="hero-pane hero-pane--{i}">{img(by_id[pid], "100vw", fp, lazy=False)}</div>'
                     for i, pid in enumerate(site["features"]["hero"]))
     return f'''<section class="hero" aria-label="Introduction">
   {panes}
@@ -169,31 +170,29 @@ def edits(site, by_id, looks):
 
 
 def looks_grid(site, shown):
-    focus = site["features"].get("focus", {})
     cards = []
     for look in site["looks"]:
         photos = [p for p in shown if p["look"] == look["key"]]
         if not photos:
             continue
         lead = photos[0]
-        cards.append(f'<a class="look-card reveal" href="looks.html#{look["key"]}"><div class="ph">{img(lead, "(max-width:760px) 45vw, 23vw", focus.get(lead["id"]))}</div>'
-                     f'<span class="look-no">Look {num(look)}</span><span class="look-name">{e(look["name"])}</span></a>')
-    cards.append('<a class="look-card look-card--all reveal" href="looks.html"><span>All looks</span><em>→</em></a>')
+        cards.append(f'<a class="journal-card look-card" href="looks.html#{look["key"]}">{img(lead, "(max-width:760px) 46vw, 24vw")}'
+                     f'<figcaption><span>Look {num(look)} / {len(photos)} frame{"s" if len(photos) != 1 else ""}</span><b>{e(look["name"])}</b></figcaption></a>')
     return f'''<section class="looks-index" id="looks">
-  <div class="section-head section-head--tight"><div><p class="kicker">{len(cards) - 1} looks</p><h2>The Looks</h2></div></div>
-  <div class="look-grid">{"".join(cards)}</div>
+  <div class="section-head section-head--tight"><div><p class="kicker">{len(cards)} looks</p><h2>The<br><i>Looks.</i></h2></div>
+  <p class="section-note">One card for each look. Select one to see every photograph of it, or <a class="inline-link" href="looks.html">view all frames</a>.</p></div>
+  <div class="journal-grid" data-masonry>{"".join(cards)}</div>
+  <div class="journal-foot"><span>The URIAH visual journal</span><a href="looks.html">All {len(shown)} photographs →</a></div>
 </section>'''
 
 
-def details(site):
-    items = "".join(
-        f'<a class="closeup reveal" href="looks.html#{c["look"]}"><div class="ph ph--square"><img src="assets/{c["file"]}" loading="lazy" decoding="async" alt="{e(c["label"])}, close-up"></div>'
-        f'<b>{e(c["label"])}</b><span>{e(c["text"])}</span></a>' for c in site["features"]["closeups"])
-    return f'''<section class="details" id="details">
+def signature(site):
+    s = site["features"]["signature"]
+    return f'''<section class="details" id="signature">
   <div class="house-mark"><img src="assets/va-black.png" alt=""></div>
-  <p class="kicker">The details</p>
+  <p class="kicker">{e(s["kicker"])}</p>
   <h2>Elevated wear.<br><i>Everyday essentials.</i></h2>
-  <div class="closeups">{items}</div>
+  <p class="signature-line">{e(s["line"])}</p>
 </section>'''
 
 
@@ -248,7 +247,7 @@ def build():
     by_id = {p["id"]: p for p in site["photos"]}
     looks = {l["key"]: l for l in site["looks"]}
     shown = [p for p in site["photos"] if not p.get("hidden")]
-    home = "\n".join([hero(site, by_id), edits(site, by_id, looks), looks_grid(site, shown), details(site), order()])
+    home = "\n".join([hero(site, by_id), edits(site, by_id, looks), looks_grid(site, shown), signature(site), order()])
     with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(page(f'URIAH — {site["story"]["title"]}', True, home, site))
     with open(os.path.join(ROOT, "looks.html"), "w", encoding="utf-8") as fh:
