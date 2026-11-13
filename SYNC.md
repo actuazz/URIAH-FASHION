@@ -11,9 +11,15 @@ comes from `content/site.json`; `index.html` is generated from it.
    `export-design` on `DAHIlHPgXMQ` as `jpg`, `width: 800`, all pages. Download
    every URL straight away (they expire) into a fresh temporary folder outside
    the repository, named `pNN.jpg` by page number.
-2. **Find new pages.** For each file run
-   `python3 tools/ingest.py --check <file>`. It prints `NEW` or
-   `DUPLICATE of <id>`. Ignore duplicates.
+2. **Sort the pages.** For each file run
+   `python3 tools/ingest.py --check <file>`. It prints one of:
+   - `DUPLICATE of <id>`: already on the site, unchanged. Ignore it.
+   - `UPDATED <id>`: a photo already on the site that has been edited in
+     Canva, for example with the logo removed. Export that page as `png`
+     with `export_quality: "pro"` and run
+     `python3 tools/ingest.py <png> --replace <id> --source "canva:DAHIlHPgXMQ:p<N>"`.
+     It keeps the photo's place, title and chapter.
+   - `NEW`: continue with step 3.
 3. **Look at each NEW page** and skip it if it is not a fashion photograph
    (blank pages, decorations, text-only slides, price lists).
 4. **Get it at full quality.** Export just those pages again as `png` with
@@ -31,16 +37,19 @@ comes from `content/site.json`; `index.html` is generated from it.
 6. **Rebuild** with `python3 tools/build.py`, and check that the page opens
    with no missing images.
 7. **Publish.** Commit with a message like
-   `Add 2 photos from Canva (pages 33, 34)` and push to the default branch.
+   `Canva sync: add pages 33, 34; update page 5` and push to the default branch.
    GitHub Pages republishes the site within a minute or two.
-8. If nothing was new, change nothing and do not commit.
+8. If nothing was new or updated, change nothing and do not commit.
 
 ## Notes
 
 - Removing a page in Canva does **not** remove it from the site. Delete its
   entry from `content/site.json` and its files in `assets/photos/` by hand.
-- The hero, the signature look, the full-bleed moments and the fabric crops
-  are chosen by hand in `content/site.json` → `features` and are not changed
-  by the sync.
+- New photos appear on the **collection page** (`collection.html`), in their
+  chapter. The **homepage** is curated by hand in `content/site.json` →
+  `features` (hero, signature look, five moods, full-bleed moment, fabric
+  crops, selected frames) and is never changed by the sync, so it stays calm.
+- The fabric close-ups in `assets/craft/` are hand-cut crops and are not
+  regenerated when a photo is replaced.
 - To move a photo to another chapter, change its `chapter` in
   `content/site.json` and run `python3 tools/build.py`.

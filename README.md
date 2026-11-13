@@ -21,11 +21,14 @@ Between them sit **The Signature Look**, a drag-to-turn multi-angle viewer, and
 
 ## How it is built
 
+- **Two pages.** `index.html` is the calm, hand-curated homepage;
+  `collection.html` holds every photograph, filterable by chapter. New photos
+  only ever appear on the collection page.
 - `content/site.json` holds everything: chapters, photo order, titles, alt
   text, and the hand-picked features (hero, signature frames, full-bleed
   moments, craft crops).
-- `python3 tools/build.py` generates `index.html` from it. Do not edit
-  `index.html` by hand.
+- `python3 tools/build.py` generates both pages from it. Do not edit
+  the HTML files by hand.
 - `python3 tools/ingest.py` adds a new photograph (web sizes + manifest entry)
   and detects duplicates.
 - `SYNC.md` describes the automatic Canva → website sync.

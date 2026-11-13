@@ -79,15 +79,8 @@
   "fullbleed": [
    {
     "id": "09",
-    "after": "transit",
     "focus": "38% 64%",
     "caption": "Coffee, then onwards"
-   },
-   {
-    "id": "12",
-    "after": "pause",
-    "focus": "58% 84%",
-    "caption": "By the tram"
    }
   ],
   "craft": [
@@ -115,7 +108,30 @@
     "text": "Soft satin ruffles that catch the daylight.",
     "from": "21"
    }
-  ]
+  ],
+  "moods": {
+   "title": "Five moods",
+   "heading": "The day, in<br><i>five rooms.</i>",
+   "picks": {
+    "morning": "01",
+    "transit": "10",
+    "pause": "11",
+    "light": "26",
+    "evening": "27"
+   }
+  },
+  "selected": {
+   "title": "Selected Frames",
+   "line": "A few pieces we keep returning to. The full collection waits at the end.",
+   "picks": [
+    "21",
+    "15",
+    "25",
+    "29",
+    "19",
+    "23"
+   ]
+  }
  },
  "photos": [
   {

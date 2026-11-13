@@ -6,7 +6,7 @@
   /* ---------- header: transparent over the hero, solid after ---------- */
   const header = document.querySelector("[data-header]");
   const hero = document.querySelector(".hero");
-  const setHeader = () => header.classList.toggle("is-solid", !hero || scrollY > hero.offsetHeight - 90);
+  const setHeader = () => { if (!header.classList.contains("is-fixed-solid")) header.classList.toggle("is-solid", !hero || scrollY > hero.offsetHeight - 90); };
 
   /* ---------- menu ---------- */
   const menu = document.querySelector("[data-menu]");
@@ -143,12 +143,53 @@
     render();
   }
 
+  /* ---------- collection: masonry that keeps reading order + chapter filters ---------- */
+  const grids = [...document.querySelectorAll("[data-masonry]")].map(g => ({ g, cards: [...g.children], n: 0 }));
+  const layoutGrids = force => grids.forEach(m => {
+    const n = innerWidth <= 760 ? 2 : innerWidth <= 1100 ? 3 : 4;
+    if (n === m.n && !force) return;
+    m.n = n;
+    const cols = Array.from({ length: n }, () => Object.assign(document.createElement("div"), { className: "cat-col" }));
+    const h = new Array(n).fill(0);
+    m.cards.forEach(card => {
+      const im = card.querySelector("img");
+      const i = h.indexOf(Math.min(...h));
+      cols[i].appendChild(card);
+      h[i] += im.height / im.width + 0.15;
+    });
+    m.g.replaceChildren(...cols);
+  });
+  if (grids.length) { layoutGrids(true); addEventListener("resize", () => layoutGrids(false)); }
+
+  const filterBar = document.querySelector("[data-filters]");
+  if (filterBar) {
+    const chapters = [...document.querySelectorAll("[data-chapter].cat-chapter")];
+    const buttons = [...filterBar.querySelectorAll(".filter")];
+    const apply = (key, scroll) => {
+      if (!buttons.some(b => b.dataset.filter === key)) key = "all";
+      buttons.forEach(b => b.classList.toggle("is-active", b.dataset.filter === key));
+      chapters.forEach(c => { c.hidden = key !== "all" && c.dataset.chapter !== key; });
+      chapters.forEach(c => c.querySelectorAll(".reveal").forEach(r => r.classList.add("is-in")));
+      if (scroll) scrollTo({ top: filterBar.offsetTop - 70, behavior: reduce ? "auto" : "smooth" });
+    };
+    buttons.forEach(b => b.addEventListener("click", () => {
+      apply(b.dataset.filter, true);
+      history.replaceState(null, "", b.dataset.filter === "all" ? location.pathname : `#ch-${b.dataset.filter}`);
+    }));
+    const fromHash = () => { const k = location.hash.replace("#ch-", ""); if (location.hash.startsWith("#ch-")) apply(k, true); };
+    addEventListener("hashchange", fromHash);
+    fromHash();
+  }
+
   /* ---------- lightbox ---------- */
   const lb = document.querySelector("[data-lightbox]");
   const lbImg = lb.querySelector("[data-lb-img]");
-  const seen = new Set();
-  const items = [...document.querySelectorAll(".piece[data-full]")].filter(p => !seen.has(p.dataset.full) && seen.add(p.dataset.full));
-  let cur = 0, lastFocus = null;
+  let items = [], cur = 0, lastFocus = null;
+  const collect = () => {
+    const seen = new Set();
+    items = [...document.querySelectorAll(".piece[data-full]")]
+      .filter(p => p.offsetParent !== null && !seen.has(p.dataset.full) && seen.add(p.dataset.full));
+  };
   const show = i => {
     cur = (i + items.length) % items.length;
     const p = items[cur], im = p.querySelector("img");
@@ -157,7 +198,7 @@
     lb.querySelector("[data-lb-chapter]").textContent = p.dataset.chapter;
     lb.querySelector("[data-lb-count]").textContent = `${String(cur + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
   };
-  const open = p => { lastFocus = document.activeElement; show(items.findIndex(x => x.dataset.full === p.dataset.full)); lb.hidden = false; document.body.classList.add("is-locked"); lb.querySelector("[data-lb-close]").focus(); };
+  const open = p => { collect(); lastFocus = document.activeElement; show(items.findIndex(x => x.dataset.full === p.dataset.full)); lb.hidden = false; document.body.classList.add("is-locked"); lb.querySelector("[data-lb-close]").focus(); };
   const close = () => { lb.hidden = true; document.body.classList.remove("is-locked"); lastFocus && lastFocus.focus(); };
   document.querySelectorAll(".piece[data-full]").forEach(p => {
     p.addEventListener("click", () => open(p));
