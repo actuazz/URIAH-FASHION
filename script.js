@@ -36,6 +36,19 @@
     document.querySelectorAll(".reveal").forEach(n => io.observe(n));
   }
 
+  /* the looks collage: glide in when it arrives, pause/play control */
+  const stage = document.querySelector("[data-collage]");
+  if (stage) {
+    const toggle = stage.querySelector("[data-collage-toggle]");
+    toggle.addEventListener("click", () => {
+      const paused = stage.classList.toggle("is-paused");
+      toggle.setAttribute("aria-pressed", String(paused));
+      toggle.setAttribute("aria-label", paused ? "Play the moving photographs" : "Pause the moving photographs");
+    });
+    if (reduce || !("IntersectionObserver" in window)) stage.classList.add("is-in");
+    else new IntersectionObserver(([en], obs) => { if (en.isIntersecting) { stage.classList.add("is-in"); obs.disconnect(); } }, { threshold: 0.2 }).observe(stage);
+  }
+
   /* journal: masonry that keeps reading order, plus look filters */
   const grid = document.querySelector("[data-masonry]");
   if (grid) {

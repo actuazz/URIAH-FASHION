@@ -261,3 +261,19 @@ body.is-locked{overflow:hidden}
   .collage-section::after{display:none}
 }
 @media (prefers-reduced-motion:reduce){.collage-track{animation:none}}
+
+/* collage: entrance and pause control */
+.collage-col{opacity:0;transform:translate(60px,90px);transition:opacity 1.2s var(--ease),transform 1.6s var(--ease)}
+.collage-stage.is-in .collage-col{opacity:1;transform:none}
+.collage-stage.is-in .collage-col:nth-child(2){transition-delay:.12s}
+.collage-stage.is-in .collage-col:nth-child(3){transition-delay:.24s}
+.collage-stage.is-in .collage-col:nth-child(4){transition-delay:.36s}
+.collage-stage.is-paused .collage-track{animation-play-state:paused}
+.collage-toggle{position:absolute;right:22px;bottom:22px;z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(40,30,25,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;transition:background .3s}
+.collage-toggle:hover{background:rgba(40,30,25,.8)}
+.collage-toggle span{grid-area:1/1}
+.i-pause{width:12px;height:13px;border-left:3px solid #fff;border-right:3px solid #fff}
+.i-play{width:0;height:0;border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px;display:none}
+.collage-stage.is-paused .i-pause{display:none}
+.collage-stage.is-paused .i-play{display:block}
+@media (prefers-reduced-motion:reduce){.collage-col{opacity:1;transform:none}.collage-toggle{display:none}}

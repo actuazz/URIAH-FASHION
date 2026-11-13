@@ -196,7 +196,9 @@ def looks_grid(site, shown):
     <ol class="collage-index">{index}</ol>
     <a class="text-link" href="looks.html">All {len(shown)} photographs <span>↗</span></a>
   </div>
-  <div class="collage-stage" aria-hidden="true"><div class="collage">{columns}</div></div>
+  <div class="collage-stage" data-collage><div class="collage" aria-hidden="true">{columns}</div>
+    <button class="collage-toggle" data-collage-toggle aria-pressed="false" aria-label="Pause the moving photographs"><span class="i-pause"></span><span class="i-play"></span></button>
+  </div>
 </section>'''
 
 
