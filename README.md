@@ -5,9 +5,9 @@ A considered, responsive editorial fashion-house homepage built around the suppl
 ## Art direction
 - Quiet, cohesive visual language: warm paper, ink, muted champagne, serif display type and restrained sans-serif labels.
 - Clear page rhythm: brand statement, four collection edits, visual journal, brand signature and direct enquiry.
-- Six edits, categorised by outfit and photographic story:
-  - City Journal — 5 photos
-  - Everyday — 8 photos
+- Six edits, one per outfit, so each edit is a single enquirable look:
+  - City Journal — 3 photos
+  - Everyday — 10 photos
   - Blue Study — 6 photos
   - Blush — 4 photos
   - Poolside — 3 photos
