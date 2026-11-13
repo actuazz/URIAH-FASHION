@@ -1,24 +1,44 @@
 # URIAH — House Website
 
-A considered, responsive editorial fashion-house homepage built around the supplied campaign photography and VA monogram.
+A private-exhibition homepage for URIAH: *A Day, Considered*. White gallery
+space, deep black and a single champagne accent; Bodoni Moda headlines with
+Jost for navigation and details.
 
-## Art direction
-- Quiet, cohesive visual language: warm paper, ink, muted champagne, serif display type and restrained sans-serif labels.
-- Clear page rhythm: brand statement, four collection edits, visual journal, brand signature and direct enquiry.
-- Six edits, one per outfit, so each edit is a single enquirable look:
-  - City Journal — 3 photos
-  - Everyday — 10 photos
-  - Blue Study — 6 photos
-  - Blush — 4 photos
-  - Poolside — 3 photos
-  - Heritage — 4 photos
-- All 30 photographs are shown uncropped at their original aspect ratio. Each is exported as WebP at 800px (grid) and 1600px (full view) in `assets/photos/`.
-- Photo viewer (lightbox) with previous/next, keyboard arrows and an enquiry link.
-- Responsive navigation and working photo category filters.
-- Enquiry links lead to the official URIAH Facebook page.
+## The story
+
+The photographs are grouped by mood into five chapters that follow one day:
+
+| | Chapter | Mood | Layout |
+|---|---|---|---|
+| I | Morning | bright, open streets | full-screen hero + floating exhibition |
+| II | In Transit | movement, crossings | floating exhibition, then a full-bleed moment |
+| III | A Pause | stillness, shopfronts, monochrome | floating exhibition, then a full-bleed moment |
+| IV | Soft Light | satin, florals, poolside | horizontal scrolling sequence |
+| V | Evening | lamplight, woven detail | layered silhouettes on black |
+
+Between them sit **The Signature Look**, a drag-to-turn multi-angle viewer, and
+**Held Close**, a fabric and craft section built from close-up crops.
+
+## How it is built
+
+- `content/site.json` holds everything: chapters, photo order, titles, alt
+  text, and the hand-picked features (hero, signature frames, full-bleed
+  moments, craft crops).
+- `python3 tools/build.py` generates `index.html` from it. Do not edit
+  `index.html` by hand.
+- `python3 tools/ingest.py` adds a new photograph (web sizes + manifest entry)
+  and detects duplicates.
+- `SYNC.md` describes the automatic Canva → website sync.
+- Photos live in `assets/photos/` as WebP at 800 px and 1600 px wide (2400 px
+  for full-screen images); craft crops are in `assets/craft/`.
+
+## Preview and publish
+
+Run `python3 -m http.server` in this folder and open http://localhost:8000.
+To publish, push to GitHub and enable GitHub Pages (Settings → Pages → deploy
+from the default branch, root folder).
 
 ## Commerce scope
-This is a custom-coded static brand and catalog website. It does not have a cart, checkout, live stock, product pricing or payment processing. Customers are directed to Facebook Messenger for product questions and orders.
 
-## Preview
-Open `index.html` in a browser with the `assets` folder kept beside it. To publish, upload the complete folder to a static host such as Netlify, Cloudflare Pages or GitHub Pages.
+A brand and catalogue site: no cart, checkout or payments. Enquiries go to the
+official URIAH Facebook page.
