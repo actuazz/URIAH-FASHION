@@ -31,7 +31,6 @@ h1,h2{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:.005em}
 .ph--45{aspect-ratio:4/5}
 .ph--11{aspect-ratio:1/1}
 .ph--wide{aspect-ratio:3/2}
-.ph--moment{aspect-ratio:3/2;max-height:88vh;width:100%}
 
 /* header */
 .site-header{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;height:76px;padding:0 var(--gutter);background:rgba(247,245,240,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s}
@@ -51,9 +50,12 @@ h1,h2{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:.005em}
 .opening-photo{margin:0}
 
 /* coffee, then onwards */
-.moment{padding:0 var(--gutter)}
-.moment figure{margin:0 auto;max-width:1600px}
-.moment figcaption{font:italic 400 clamp(24px,2.4vw,34px)/1.2 var(--serif);margin-top:20px}
+.feature{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,7vw,120px);align-items:center;max-width:var(--max);margin:0 auto;padding:clamp(40px,6vh,80px) var(--gutter) 0}
+.feature-copy{max-width:420px;justify-self:end}
+.feature h2{font-size:clamp(48px,5.6vw,84px);line-height:.98;margin:20px 0 26px}
+.feature h2 i{font-style:italic}
+.feature-aside{margin:56px 0 0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+.feature-photo{margin:0}
 
 /* section heads */
 .section-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:40px}
@@ -151,8 +153,10 @@ body.is-locked{overflow:hidden}
   .opening-photo{order:-1}
   .opening h1{margin:16px 0 20px}
   .lede{font-size:16px;margin-bottom:30px}
-  .ph--moment{aspect-ratio:4/5}
-  .moment .ph img{object-position:30% 60%}
+  .feature{grid-template-columns:1fr;gap:30px;padding-top:20px}
+  .feature-photo{order:-1}
+  .feature-copy{justify-self:start}
+  .feature-aside{margin-top:34px}
   .looks-index,.closeups-wrap,.order{padding-top:90px}
   .look-grid{gap:30px 12px}
   .look-name{font-size:18px}

@@ -5,10 +5,6 @@
  },
  "features": {
   "opening": "02",
-  "moment": {
-   "id": "31",
-   "caption": "Coffee, then onwards."
-  },
   "focus": {
    "01": "14% 70%",
    "23": "50% 70%",
@@ -40,7 +36,15 @@
     "text": "A silk ruffle that catches the light.",
     "look": "look-04"
    }
-  ]
+  ],
+  "feature": {
+   "id": "15",
+   "look": "look-03",
+   "kicker": "The City Edit",
+   "title": "Blue,|in motion.",
+   "text": "Confident colour and fluid silhouettes, captured in the rhythm of the city. Made for days that rarely stay in one place.",
+   "aside": "Navy / City / Movement"
+  }
  },
  "photos": [
   {

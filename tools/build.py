@@ -110,7 +110,10 @@ def page(title, current, body):
 def home(site, by_id, shown):
     f = site["features"]
     op = by_id[f["opening"]]
-    mo = by_id[f["moment"]["id"]]
+    ft = f["feature"]
+    fp = by_id[ft["id"]]
+    fl = next(l for l in site["looks"] if l["key"] == ft["look"])
+    t1, t2 = ft["title"].split("|")
     focus = f.get("focus", {})
     cards = []
     for look in site["looks"]:
@@ -136,8 +139,15 @@ def home(site, by_id, shown):
   <figure class="opening-photo"><div class="ph ph--45">{img(op, "(max-width:760px) 100vw, 44vw", focus.get(op["id"]), lazy=False)}</div></figure>
 </section>
 
-<section class="moment" aria-label="{e(f["moment"]["caption"])}">
-  <figure><div class="ph ph--moment">{img(mo, "100vw")}</div><figcaption>{e(f["moment"]["caption"])}</figcaption></figure>
+<section class="feature" aria-label="{e(t1 + " " + t2)}">
+  <div class="feature-copy reveal">
+    <p class="kicker">{e(ft["kicker"])} · Look {num(fl)}</p>
+    <h2>{e(t1)}<br><i>{e(t2)}</i></h2>
+    <p class="lede">{e(ft["text"])}</p>
+    <a class="text-link" href="looks.html#{fl["key"]}">View the look <span>→</span></a>
+    <p class="feature-aside">{e(ft["aside"])}</p>
+  </div>
+  <figure class="feature-photo reveal"><div class="ph ph--45">{img(fp, "(max-width:760px) 100vw, 46vw", focus.get(fp["id"]))}</div></figure>
 </section>
 
 <section class="looks-index" id="looks">
