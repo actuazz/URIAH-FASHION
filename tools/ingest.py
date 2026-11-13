@@ -6,7 +6,7 @@ Check only (prints NEW, DUPLICATE of <id>, or UPDATED <id>):
 
   UPDATED means it is a photo already on the site but visibly edited, for
   example with the logo removed. Swap in the new version, keeping its place,
-  title and chapter:
+  title and look:
     python3 tools/ingest.py path/to/image.png --replace <id> --source "canva:DAHIlHPgXMQ:p<N>"
 
 Add (creates web sizes, appends to content/site.json; then run tools/build.py):

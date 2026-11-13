@@ -18,7 +18,7 @@ comes from `content/site.json`; `index.html` is generated from it.
      Canva, for example with the logo removed. Export that page as `png`
      with `export_quality: "pro"` and run
      `python3 tools/ingest.py <png> --replace <id> --source "canva:DAHIlHPgXMQ:p<N>"`.
-     It keeps the photo's place, title and chapter.
+     It keeps the photo's place, title and look.
    - `NEW`: continue with step 3.
 3. **Look at each NEW page** and skip it if it is not a single fashion
    photograph: blank pages, decorations, text-only slides, price lists, and
