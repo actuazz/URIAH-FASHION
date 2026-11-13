@@ -5,12 +5,15 @@ A considered, responsive editorial fashion-house homepage built around the suppl
 ## Art direction
 - Quiet, cohesive visual language: warm paper, ink, muted champagne, serif display type and restrained sans-serif labels.
 - Clear page rhythm: brand statement, four collection edits, visual journal, brand signature and direct enquiry.
-- The four edits are categorized by the actual outfits and photographic stories:
-  - The Blush Edit — 2 photos
-  - The Blue Study — 4 photos
-  - City Journal — 3 photos
-  - Everyday — 2 photos
-- All 11 supplied photographs are shown at their original aspect ratio. The gallery uses natural image height and masonry columns; it does not crop the source photographs.
+- Six edits, categorised by outfit and photographic story:
+  - City Journal — 5 photos
+  - Everyday — 8 photos
+  - Blue Study — 6 photos
+  - Blush — 4 photos
+  - Poolside — 3 photos
+  - Heritage — 4 photos
+- All 30 photographs are shown uncropped at their original aspect ratio. Each is exported as WebP at 800px (grid) and 1600px (full view) in `assets/photos/`.
+- Photo viewer (lightbox) with previous/next, keyboard arrows and an enquiry link.
 - Responsive navigation and working photo category filters.
 - Enquiry links lead to the official URIAH Facebook page.
 
