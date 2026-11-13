@@ -63,7 +63,7 @@ def head(title):
 <link rel="icon" type="image/png" href="assets/va-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Italiana&family=Pinyon+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>'''
 
@@ -136,7 +136,7 @@ def hero(site, by_id):
     return f'''<section class="hero" aria-label="Introduction">
   {panes}
   <div class="hero-text">
-    <p class="kicker kicker--light">The collection</p>
+    <p class="script script--light">the collection</p>
     <h1>A Day,<br><i>Considered</i></h1>
   </div>
   <a class="hero-scroll" href="#edits" aria-label="Scroll to the edits"><span>Scroll</span><i></i></a>
@@ -170,19 +170,33 @@ def edits(site, by_id, looks):
 
 
 def looks_grid(site, shown):
-    cards = []
-    for look in site["looks"]:
-        photos = [p for p in shown if p["look"] == look["key"]]
-        if not photos:
-            continue
-        lead = photos[0]
-        cards.append(f'<a class="journal-card look-card" href="looks.html#{look["key"]}">{img(lead, "(max-width:760px) 46vw, 24vw")}'
-                     f'<figcaption><span>Look {num(look)} / {len(photos)} frame{"s" if len(photos) != 1 else ""}</span><b>{e(look["name"])}</b></figcaption></a>')
-    return f'''<section class="looks-index" id="looks">
-  <div class="section-head section-head--tight"><div><p class="kicker">{len(cards)} looks</p><h2>The<br><i>Looks.</i></h2></div>
-  <p class="section-note">One card for each look. Select one to see every photograph of it, or <a class="inline-link" href="looks.html">view all frames</a>.</p></div>
-  <div class="journal-grid" data-masonry>{"".join(cards)}</div>
-  <div class="journal-foot"><span>The URIAH visual journal</span><a href="looks.html">All {len(shown)} photographs →</a></div>
+    """The Looks as a tilted, slowly drifting collage of rounded tiles."""
+    looks = [l for l in site["looks"] if any(p["look"] == l["key"] for p in shown)]
+    lk = {l["key"]: l for l in looks}
+    # leads first so every look shows near the start, then the rest
+    leads = [next(p for p in shown if p["look"] == l["key"]) for l in looks]
+    pool = leads + [p for p in shown if p not in leads]
+    ncol = 4
+    cols = [pool[i::ncol] for i in range(ncol)]
+    def tile(p):
+        l = lk[p["look"]]
+        return (f'<a class="tile" href="looks.html#{l["key"]}" tabindex="-1" aria-hidden="true">'
+                f'<img src="{P}/{p["id"]}-800.webp" width="{p["width"]}" height="{p["height"]}" loading="lazy" decoding="async" alt="">'
+                f'<span>Look {num(l)}</span></a>')
+    columns = "".join(
+        f'<div class="collage-col collage-col--{i % 2}" style="--dur:{52 + i * 7}s"><div class="collage-track">'
+        f'{"".join(tile(p) for p in col)}{"".join(tile(p) for p in col)}</div></div>'
+        for i, col in enumerate(cols))
+    index = "".join(f'<li><a href="looks.html#{l["key"]}"><span>{num(l)}</span>{e(l["name"])}</a></li>' for l in looks)
+    return f'''<section class="collage-section" id="looks">
+  <div class="collage-copy reveal">
+    <img class="collage-mark" src="assets/va-black.png" alt="">
+    <h2><span class="script">the</span>LOOKS</h2>
+    <p class="collage-lede">One card for each look. Select a look to see every frame of it.</p>
+    <ol class="collage-index">{index}</ol>
+    <a class="text-link" href="looks.html">All {len(shown)} photographs <span>↗</span></a>
+  </div>
+  <div class="collage-stage" aria-hidden="true"><div class="collage">{columns}</div></div>
 </section>'''
 
 
@@ -190,7 +204,7 @@ def signature(site):
     s = site["features"]["signature"]
     return f'''<section class="details" id="signature">
   <div class="house-mark"><img src="assets/va-black.png" alt=""></div>
-  <p class="kicker">{e(s["kicker"])}</p>
+  <p class="script">{e(s["kicker"].lower())}</p>
   <h2>Elevated wear.<br><i>Everyday essentials.</i></h2>
   <p class="signature-line">{e(s["line"])}</p>
 </section>'''
@@ -198,7 +212,7 @@ def signature(site):
 
 def order():
     return f'''<section class="order" id="order">
-  <div><p class="kicker">A personal enquiry</p><h2>How to<br><i>order.</i></h2></div>
+  <div><p class="script">a personal enquiry</p><h2>How to<br><i>order.</i></h2></div>
   <div class="order-steps">
     <ol>
       <li><span>01</span><div><b>Choose a look</b><p>Note its number, for example Look 02.</p></div></li>
