@@ -136,7 +136,6 @@ def hero(site, by_id):
     return f'''<section class="hero" aria-label="Introduction">
   {panes}
   <div class="hero-text">
-    <p class="script script--light">a day, considered</p>
     <h1>Elevated wear.<br><i>Everyday essentials.</i></h1>
   </div>
   <a class="hero-scroll" href="#edits" aria-label="Scroll to the edits"><span>Scroll</span><i></i></a>
@@ -170,34 +169,25 @@ def edits(site, by_id, looks):
 
 
 def looks_grid(site, shown):
-    """The Looks as a tilted, slowly drifting collage of rounded tiles."""
-    looks = [l for l in site["looks"] if any(p["look"] == l["key"] for p in shown)]
-    lk = {l["key"]: l for l in looks}
-    # leads first so every look shows near the start, then the rest
-    leads = [next(p for p in shown if p["look"] == l["key"]) for l in looks]
-    pool = leads + [p for p in shown if p not in leads]
-    ncol = 4
-    cols = [pool[i::ncol] for i in range(ncol)]
-    def tile(p):
+    """The Looks as a sliding strip of photographs (auto-drifts, swipeable, pausable)."""
+    lk = {l["key"]: l for l in site["looks"]}
+    def slide(p, dup):
         l = lk[p["look"]]
-        return (f'<a class="tile" href="looks.html#{l["key"]}" tabindex="-1" aria-hidden="true">'
-                f'<img src="{P}/{p["id"]}-800.webp" width="{p["width"]}" height="{p["height"]}" loading="lazy" decoding="async" alt="">'
+        hide = ' aria-hidden="true" tabindex="-1"' if dup else ""
+        return (f'<a class="slide" href="looks.html#{l["key"]}"{hide}>'
+                f'<img src="{P}/{p["id"]}-800.webp" width="{p["width"]}" height="{p["height"]}" loading="lazy" decoding="async" alt="{"" if dup else e(p["alt"])}">'
                 f'<span>Look {num(l)}</span></a>')
-    columns = "".join(
-        f'<div class="collage-col collage-col--{i % 2}" style="--dur:{52 + i * 7}s"><div class="collage-track">'
-        f'{"".join(tile(p) for p in col)}{"".join(tile(p) for p in col)}</div></div>'
-        for i, col in enumerate(cols))
-    index = "".join(f'<li><a href="looks.html#{l["key"]}"><span>{num(l)}</span>{e(l["name"])}</a></li>' for l in looks)
-    return f'''<section class="collage-section" id="looks">
-  <div class="collage-copy reveal">
-    <img class="collage-mark" src="assets/va-black.png" alt="">
+    once = "".join(slide(p, False) for p in shown)
+    twice = "".join(slide(p, True) for p in shown)
+    return f'''<section class="looks-strip" id="looks">
+  <div class="strip-head reveal">
     <h2><span class="script">the</span>LOOKS</h2>
-    <p class="collage-lede">One card for each look. Select a look to see every frame of it.</p>
-    <ol class="collage-index">{index}</ol>
-    <a class="text-link" href="looks.html">All {len(shown)} photographs <span>↗</span></a>
+    <div class="strip-note"><p>{len(site["looks"])} looks, {len(shown)} photographs. Select a photograph to see its look.</p>
+    <a class="text-link" href="looks.html">See all looks <span>↗</span></a></div>
   </div>
-  <div class="collage-stage" data-collage><div class="collage" aria-hidden="true">{columns}</div>
-    <button class="collage-toggle" data-collage-toggle aria-pressed="false" aria-label="Pause the moving photographs"><span class="i-pause"></span><span class="i-play"></span></button>
+  <div class="strip-frame" data-strip>
+    <div class="strip" data-strip-scroll><div class="strip-track">{once}{twice}</div></div>
+    <button class="strip-toggle" data-strip-toggle aria-pressed="false" aria-label="Pause the sliding photographs"><span class="i-pause"></span><span class="i-play"></span></button>
   </div>
 </section>'''
 

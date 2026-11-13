@@ -227,53 +227,35 @@ body.is-locked{overflow:hidden}
 .hero .script{font-size:clamp(30px,3vw,44px)}
 .details .script,.order .script{display:block;margin-bottom:6px}
 
-/* ---------- the looks: tilted, drifting collage ---------- */
-.collage-section{position:relative;display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);min-height:min(100vh,940px);background:var(--blush) var(--grain);overflow:hidden}
-.collage-copy{position:relative;z-index:2;align-self:center;padding:clamp(80px,12vh,120px) 0 clamp(80px,12vh,120px) var(--gutter);max-width:520px}
-.collage-mark{width:46px;margin-bottom:26px;opacity:.85}
-.collage-copy h2{display:flex;flex-direction:column;font:400 clamp(66px,7.4vw,118px)/.86 var(--serif);letter-spacing:.06em;color:#3b302b}
-.collage-copy h2 .script{font-size:clamp(46px,4.6vw,70px);color:#7c6553;margin:0 0 -.12em .1em;letter-spacing:0}
-.collage-lede{font-size:16px;color:#5c4f47;margin:26px 0 30px;max-width:340px}
-.collage-index{list-style:none;margin:0 0 38px;padding:0;border-top:1px solid rgba(80,62,50,.18)}
-.collage-index li{border-bottom:1px solid rgba(80,62,50,.18)}
-.collage-index a{display:flex;gap:16px;align-items:baseline;padding:9px 0;font:400 20px var(--serif);color:#3b302b;transition:padding .4s var(--ease),color .3s}
-.collage-index a span{font:400 10px var(--sans);letter-spacing:.18em;color:#8a6f5c;width:20px}
-.collage-index a:hover{padding-left:10px;color:#7c6553}
-.collage-section .text-link{border-color:#9c8270;color:#3b302b}
-.collage-stage{position:relative;min-height:100%;overflow:hidden}
-.collage{position:absolute;top:-30%;left:-6%;width:120%;height:160%;display:flex;gap:16px;transform:rotate(-14deg);transform-origin:center}
-.collage-col{flex:1;min-width:0;overflow:visible}
-.collage-track{display:flex;flex-direction:column;gap:16px;animation:drift var(--dur,60s) linear infinite}
-.collage-col--1 .collage-track{animation-direction:reverse}
-.collage:hover .collage-track{animation-play-state:paused}
-.tile{position:relative;display:block;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px -22px rgba(60,40,30,.55);background:#cbbdb3}
-.tile img{width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform 1.2s var(--ease)}
-.tile span{position:absolute;left:12px;bottom:10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .4s;text-shadow:0 1px 8px rgba(0,0,0,.6)}
-.tile:hover img{transform:scale(1.05)}
-.tile:hover span{opacity:1}
-.collage-section::after{content:"";position:absolute;inset:0 auto 0 calc(39% - 1px);width:12%;background:linear-gradient(90deg,var(--blush),rgba(226,214,207,0));pointer-events:none;z-index:1}
-@keyframes drift{from{transform:translateY(0)}to{transform:translateY(calc(-50% - 8px))}}
-@media (max-width:900px){
-  .collage-section{grid-template-columns:1fr;min-height:0}
-  .collage-copy{padding:90px var(--gutter) 40px;max-width:none}
-  .collage-stage{height:72vh}
-  .collage{top:-22%;left:-20%;width:140%;height:150%}
-  .collage-section::after{display:none}
-}
-@media (prefers-reduced-motion:reduce){.collage-track{animation:none}}
-
-/* collage: entrance and pause control */
-.collage-col{opacity:0;transform:translate(60px,90px);transition:opacity 1.2s var(--ease),transform 1.6s var(--ease)}
-.collage-stage.is-in .collage-col{opacity:1;transform:none}
-.collage-stage.is-in .collage-col:nth-child(2){transition-delay:.12s}
-.collage-stage.is-in .collage-col:nth-child(3){transition-delay:.24s}
-.collage-stage.is-in .collage-col:nth-child(4){transition-delay:.36s}
-.collage-stage.is-paused .collage-track{animation-play-state:paused}
-.collage-toggle{position:absolute;right:22px;bottom:22px;z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(40,30,25,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;transition:background .3s}
-.collage-toggle:hover{background:rgba(40,30,25,.8)}
-.collage-toggle span{grid-area:1/1}
-.i-pause{width:12px;height:13px;border-left:3px solid #fff;border-right:3px solid #fff}
+/* ---------- the looks: sliding strip ---------- */
+.looks-strip{background:var(--blush) var(--grain);padding:clamp(100px,14vh,140px) 0 clamp(100px,14vh,140px)}
+.strip-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;max-width:1240px;margin:0 auto 46px;padding:0 var(--gutter)}
+.strip-head h2{display:flex;flex-direction:column;font:400 clamp(60px,6.6vw,104px)/.86 var(--serif);letter-spacing:.06em;color:#3b302b}
+.strip-head h2 .script{font-size:clamp(42px,4.2vw,64px);color:#7c6553;margin:0 0 -.12em .1em;letter-spacing:0}
+.strip-note{max-width:330px}
+.strip-note p{font-size:15px;color:#5c4f47;margin:0 0 22px}
+.looks-strip .text-link{border-color:#9c8270;color:#3b302b}
+.strip-frame{position:relative;margin:0 var(--gutter);padding:12px;background:#fbf9f6;border-radius:18px;box-shadow:0 30px 60px -40px rgba(60,40,30,.45)}
+.strip{overflow-x:auto;overflow-y:hidden;border-radius:10px;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.strip::-webkit-scrollbar{display:none}
+.strip.is-dragging{cursor:grabbing}
+.strip-track{display:flex;width:max-content}
+.slide{position:relative;flex:none;margin-right:10px;height:min(64vh,620px);overflow:hidden;background:#e7ded8}
+.slide img{height:100%;width:auto;transition:transform 1.2s var(--ease);-webkit-user-drag:none;user-select:none}
+.slide:hover img{transform:scale(1.03)}
+.slide span{position:absolute;left:14px;bottom:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .4s;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.slide:hover span,.slide:focus-visible span{opacity:1}
+.strip-toggle{position:absolute;left:26px;bottom:26px;z-index:3;width:40px;height:40px;border-radius:10px;background:rgba(40,30,25,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;transition:background .3s}
+.strip-toggle:hover{background:rgba(40,30,25,.8)}
+.strip-toggle span{grid-area:1/1}
+.i-pause{width:11px;height:13px;border-left:3px solid #fff;border-right:3px solid #fff}
 .i-play{width:0;height:0;border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px;display:none}
-.collage-stage.is-paused .i-pause{display:none}
-.collage-stage.is-paused .i-play{display:block}
-@media (prefers-reduced-motion:reduce){.collage-col{opacity:1;transform:none}.collage-toggle{display:none}}
+.strip-frame.is-paused .i-pause{display:none}
+.strip-frame.is-paused .i-play{display:block}
+@media (max-width:760px){
+  .strip-head{flex-direction:column;align-items:flex-start;margin-bottom:32px}
+  .strip-frame{margin:0 12px;padding:8px;border-radius:14px}
+  .slide{height:52vh;margin-right:8px}
+  .strip-toggle{left:18px;bottom:18px}
+}
+@media (prefers-reduced-motion:reduce){.strip-toggle{display:none}}

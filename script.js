@@ -36,17 +36,44 @@
     document.querySelectorAll(".reveal").forEach(n => io.observe(n));
   }
 
-  /* the looks collage: glide in when it arrives, pause/play control */
-  const stage = document.querySelector("[data-collage]");
-  if (stage) {
-    const toggle = stage.querySelector("[data-collage-toggle]");
-    toggle.addEventListener("click", () => {
-      const paused = stage.classList.toggle("is-paused");
-      toggle.setAttribute("aria-pressed", String(paused));
-      toggle.setAttribute("aria-label", paused ? "Play the moving photographs" : "Pause the moving photographs");
-    });
-    if (reduce || !("IntersectionObserver" in window)) stage.classList.add("is-in");
-    else new IntersectionObserver(([en], obs) => { if (en.isIntersecting) { stage.classList.add("is-in"); obs.disconnect(); } }, { threshold: 0.2 }).observe(stage);
+  /* the looks: a sliding strip that drifts on its own, can be swiped or dragged, and paused */
+  const frame = document.querySelector("[data-strip]");
+  if (frame) {
+    const strip = frame.querySelector("[data-strip-scroll]");
+    const toggle = frame.querySelector("[data-strip-toggle]");
+    let paused = reduce, hover = false, holdUntil = 0, last = 0, acc = 0;
+    const setPaused = v => {
+      paused = v; frame.classList.toggle("is-paused", v);
+      toggle.setAttribute("aria-pressed", String(v));
+      toggle.setAttribute("aria-label", v ? "Play the sliding photographs" : "Pause the sliding photographs");
+    };
+    setPaused(paused);
+    toggle.addEventListener("click", () => setPaused(!paused));
+    strip.addEventListener("mouseenter", () => { hover = true; });
+    strip.addEventListener("mouseleave", () => { hover = false; });
+    const hold = () => { holdUntil = performance.now() + 2500; };
+    strip.addEventListener("touchstart", hold, { passive: true });
+    strip.addEventListener("wheel", hold, { passive: true });
+    // drag with the mouse
+    let down = false, startX = 0, startLeft = 0, moved = false;
+    strip.addEventListener("mousedown", ev => { down = true; moved = false; startX = ev.clientX; startLeft = strip.scrollLeft; strip.classList.add("is-dragging"); ev.preventDefault(); });
+    addEventListener("mousemove", ev => { if (!down) return; const dx = ev.clientX - startX; if (Math.abs(dx) > 4) moved = true; strip.scrollLeft = startLeft - dx; hold(); });
+    addEventListener("mouseup", () => { down = false; strip.classList.remove("is-dragging"); });
+    strip.addEventListener("click", ev => { if (moved) { ev.preventDefault(); moved = false; } }, true);
+    const loop = t => {
+      const dt = last ? Math.min(64, t - last) : 0; last = t;
+      const half = strip.scrollWidth / 2;
+      if (!paused && !hover && !down && t > holdUntil) {
+        acc += dt * 0.045;                 // about 45 px per second
+        const step = Math.floor(acc); acc -= step;
+        if (step) strip.scrollLeft += step;
+      }
+      if (half && strip.scrollLeft >= half) strip.scrollLeft -= half;
+      if (strip.scrollLeft <= 0 && half) strip.scrollLeft += half;
+      requestAnimationFrame(loop);
+    };
+    strip.scrollLeft = 1;
+    requestAnimationFrame(loop);
   }
 
   /* journal: masonry that keeps reading order, plus look filters */
