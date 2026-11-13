@@ -58,7 +58,7 @@ def head(title):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f8f7f3">
-<meta name="description" content="URIAH — Elevated wear. Everyday essentials. A Day, Considered.">
+<meta name="description" content="URIAH — Elevated wear. Everyday essentials.">
 <title>{e(title)}</title>
 <link rel="icon" type="image/png" href="assets/va-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,8 +136,8 @@ def hero(site, by_id):
     return f'''<section class="hero" aria-label="Introduction">
   {panes}
   <div class="hero-text">
-    <p class="script script--light">the collection</p>
-    <h1>A Day,<br><i>Considered</i></h1>
+    <p class="script script--light">a day, considered</p>
+    <h1>Elevated wear.<br><i>Everyday essentials.</i></h1>
   </div>
   <a class="hero-scroll" href="#edits" aria-label="Scroll to the edits"><span>Scroll</span><i></i></a>
 </section>'''
@@ -150,7 +150,7 @@ def edits(site, by_id, looks):
     for i, ed in enumerate(f["edits"]):
         p, look = by_id[ed["photo"]], looks[ed["look"]]
         image = (f'<div class="edit-image reveal"><a href="looks.html#{look["key"]}" aria-label="See {e(look["name"])}">'
-                 f'{img(p, "(max-width:760px) 100vw, 44vw")}</a><span class="image-no">Look {num(look)}</span></div>')
+                 f'{img(p, "(max-width:760px) 100vw, 44vw", ed.get("focus"))}</a><span class="image-no">Look {num(look)}</span></div>')
         copy = f'''<div class="edit-copy reveal">
       <span class="overline">{e(ed["overline"])} / {i + 1:02d}</span>
       <h3>{two_line(ed["title"])}</h3>
@@ -205,8 +205,7 @@ def signature(site):
     return f'''<section class="details" id="signature">
   <div class="house-mark"><img src="assets/va-black.png" alt=""></div>
   <p class="script">{e(s["kicker"].lower())}</p>
-  <h2>Elevated wear.<br><i>Everyday essentials.</i></h2>
-  <p class="signature-line">{e(s["line"])}</p>
+  <h2 class="signature-quote">{e(s["line"])}</h2>
 </section>'''
 
 

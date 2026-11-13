@@ -22,18 +22,20 @@
    {
     "look": "look-03",
     "photo": "15",
-    "overline": "The City Journal",
+    "overline": "The Morning Edit",
     "title": "Out in|the world.",
     "text": "Personal style in real places. Architectural lines, everyday streets and the moments between destinations.",
-    "aside": "Street / Travel / Personal style"
+    "aside": "Street / Travel / Style",
+    "focus": "50% 60%"
    },
    {
     "look": "look-04",
     "photo": "22",
-    "overline": "The Women's Edit",
+    "overline": "The Daylight Edit",
     "title": "Softness|with shape.",
     "text": "Light, expressive pieces with a relaxed point of view. A little colour, a little movement, and an ease that feels personal.",
-    "aside": "Blush / Floral / Daylight"
+    "aside": "Blush / Floral / Daylight",
+    "focus": "50% 42%"
    },
    {
     "look": "look-03",
@@ -41,7 +43,8 @@
     "overline": "The City Edit",
     "title": "Blue,|in motion.",
     "text": "Confident colour and fluid silhouettes, captured in the rhythm of the city. Made for days that rarely stay in one place.",
-    "aside": "Navy / City / Movement"
+    "aside": "Navy / City / Movement",
+    "focus": "50% 34%"
    },
    {
     "look": "look-02",
@@ -49,7 +52,8 @@
     "overline": "The Everyday Edit",
     "title": "Grounded|in expression.",
     "text": "Easy combinations, considered prints and pieces that feel like you. The everyday, with a little more intention.",
-    "aside": "Ease / Print / Monochrome"
+    "aside": "Ease / Print / Monochrome",
+    "focus": "50% 55%"
    },
    {
     "look": "look-06",
@@ -57,7 +61,8 @@
     "overline": "The Afternoon Edit",
     "title": "Ease,|by the water.",
     "text": "A softer palette and gentle texture for slow, sunlit hours. Pieces that hold their shape and still let you breathe.",
-    "aside": "Champagne / Texture / Sunlight"
+    "aside": "Champagne / Texture / Sunlight",
+    "focus": "50% 58%"
    },
    {
     "look": "look-07",
@@ -65,19 +70,20 @@
     "overline": "The Evening Edit",
     "title": "Rooted,|and refined.",
     "text": "Woven detail, sheer sleeves and a deeper palette. For evenings that ask for a little more presence.",
-    "aside": "Lace / Weave / Evening"
+    "aside": "Lace / Weave / Evening",
+    "focus": "50% 45%"
    }
   ],
   "hero_focus": "50% 74%",
   "signature": {
-   "kicker": "Our signature",
+   "kicker": "our signature",
    "line": "For the way you move, the way you live, and the person you choose to be."
   }
  },
  "photos": [
   {
    "id": "02",
-   "title": "Centre of the street",
+   "title": "Main character, minor traffic.",
    "alt": "Blush top and floral trousers, standing in the middle of a Hong Kong street lined with towers",
    "width": 1600,
    "height": 2043,
@@ -87,7 +93,7 @@
   },
   {
    "id": "01",
-   "title": "Corner, mid-afternoon",
+   "title": "Waiting for the light. Any light.",
    "alt": "Blush top and floral wide-leg trousers on a busy Hong Kong street corner",
    "width": 1600,
    "height": 2043,
@@ -97,7 +103,7 @@
   },
   {
    "id": "03",
-   "title": "In stride",
+   "title": "Late? No. Arriving.",
    "alt": "Walking across a Hong Kong street in a blush top and floral wide-leg trousers",
    "width": 1600,
    "height": 2043,
@@ -107,7 +113,7 @@
   },
   {
    "id": "06",
-   "title": "Quiet confidence",
+   "title": "Window shopping, but make it the window.",
    "alt": "Black blouse and lilac floral trousers, standing against a navy shopfront",
    "width": 1600,
    "height": 2043,
@@ -117,7 +123,7 @@
   },
   {
    "id": "05",
-   "title": "Print and proportion",
+   "title": "The trousers did the talking.",
    "alt": "Close view of a black blouse with lilac floral wide-leg trousers and a small bag",
    "width": 1600,
    "height": 2043,
@@ -127,7 +133,7 @@
   },
   {
    "id": "04",
-   "title": "A pause by the window",
+   "title": "Shades on, opinions pending.",
    "alt": "Black blouse and lilac floral trousers in front of a dark shopfront window",
    "width": 1600,
    "height": 2043,
@@ -137,7 +143,7 @@
   },
   {
    "id": "08",
-   "title": "Hand to frame",
+   "title": "Too bright out. Or too fabulous.",
    "alt": "Black blouse and lilac floral trousers, adjusting sunglasses by a shop window",
    "width": 1600,
    "height": 2043,
@@ -147,7 +153,7 @@
   },
   {
    "id": "07",
-   "title": "In good company",
+   "title": "Photobombed. Still the main character.",
    "alt": "Black blouse and floral trousers beside a passer-by in front of a shopfront",
    "width": 1600,
    "height": 2043,
@@ -157,7 +163,7 @@
   },
   {
    "id": "10",
-   "title": "Always in motion",
+   "title": "Packed light. Dressed heavy on charm.",
    "alt": "Black blouse and floral trousers, walking down a city street pulling an orange suitcase",
    "width": 1600,
    "height": 2043,
@@ -167,7 +173,7 @@
   },
   {
    "id": "09",
-   "title": "Coffee, then onwards",
+   "title": "Coffee, then onwards.",
    "alt": "Black blouse and floral trousers, crossing outside a coffee shop with an orange suitcase",
    "width": 1600,
    "height": 2043,
@@ -177,7 +183,7 @@
   },
   {
    "id": "31",
-   "title": "The corner, wide",
+   "title": "Somewhere in this frame, a perfect outfit.",
    "alt": "Wide view of a Hong Kong street corner with a coffee shop, a figure crossing with an orange suitcase",
    "width": 1600,
    "height": 1067,
@@ -187,7 +193,7 @@
   },
   {
    "id": "11",
-   "title": "A quieter frame",
+   "title": "Sitting this one out, beautifully.",
    "alt": "Black and white portrait, seated on a ledge in a black blouse and printed trousers",
    "width": 1600,
    "height": 2043,
@@ -197,7 +203,7 @@
   },
   {
    "id": "12",
-   "title": "By the tram",
+   "title": "Missed the tram. Didn't miss the moment.",
    "alt": "Black and white portrait seated beside a Hong Kong tram",
    "width": 1600,
    "height": 2043,
@@ -219,7 +225,7 @@
   },
   {
    "id": "19",
-   "title": "Between the crowd",
+   "title": "Blending in was never the plan.",
    "alt": "Navy ruffle top and blue bag among pedestrians at a crossing",
    "width": 1600,
    "height": 2667,
@@ -229,7 +235,7 @@
   },
   {
    "id": "14",
-   "title": "Blue against blue",
+   "title": "Matched the tram. On purpose.",
    "alt": "Navy ruffle top and black trousers at a crossing in front of a painted tram",
    "width": 1600,
    "height": 2043,
@@ -239,7 +245,7 @@
   },
   {
    "id": "15",
-   "title": "On the crossing",
+   "title": "Leaning in, literally.",
    "alt": "Navy ruffle top crossing a busy Hong Kong road with a tram behind",
    "width": 1600,
    "height": 2043,
@@ -249,7 +255,7 @@
   },
   {
    "id": "16",
-   "title": "Central, waiting",
+   "title": "Central Station, central character.",
    "alt": "Navy ruffle top, seated on the steps of a station entrance",
    "width": 1600,
    "height": 2043,
@@ -259,7 +265,7 @@
   },
   {
    "id": "18",
-   "title": "Under the signs",
+   "title": "No left turn. No wrong turn.",
    "alt": "Navy ruffle top and blue bag walking beneath road signs",
    "width": 1333,
    "height": 2000,
@@ -281,7 +287,7 @@
   },
   {
    "id": "21",
-   "title": "Details in daylight",
+   "title": "Silk in the sun, no regrets.",
    "alt": "Blush ruffle top, floral shorts and pink crocodile bag by a railing",
    "width": 1600,
    "height": 2667,
@@ -291,7 +297,7 @@
   },
   {
    "id": "20",
-   "title": "A softer statement",
+   "title": "Soft top, firm opinions.",
    "alt": "Blush silk ruffle top and floral shorts with a pink bag, outside a glass building",
    "width": 1600,
    "height": 2667,
@@ -301,7 +307,7 @@
   },
   {
    "id": "22",
-   "title": "Pink, in hand",
+   "title": "The bag was not optional.",
    "alt": "Close view of a blush ruffle top, floral shorts and pink bag",
    "width": 1600,
    "height": 2667,
@@ -311,7 +317,7 @@
   },
   {
    "id": "23",
-   "title": "White walls, warm tones",
+   "title": "Blank walls need a little drama.",
    "alt": "Mauve camisole and patterned midi skirt in front of white arches",
    "width": 1600,
    "height": 2667,
@@ -321,7 +327,7 @@
   },
   {
    "id": "26",
-   "title": "By the water",
+   "title": "Pool day. No intention of swimming.",
    "alt": "Champagne puff-sleeve crop top and satin wide-leg trousers beside a pool",
    "width": 1600,
    "height": 2667,
@@ -331,7 +337,7 @@
   },
   {
    "id": "24",
-   "title": "Texture, up close",
+   "title": "Woven, not stirred.",
    "alt": "Champagne puff-sleeve top with woven bodice, beside a pool",
    "width": 1600,
    "height": 2667,
@@ -341,7 +347,7 @@
   },
   {
    "id": "25",
-   "title": "Late light",
+   "title": "Golden hour clocked in early.",
    "alt": "Close portrait in a champagne puff-sleeve top by the water",
    "width": 1600,
    "height": 2667,
@@ -351,7 +357,7 @@
   },
   {
    "id": "28",
-   "title": "Woven detail",
+   "title": "Dinner reservations: implied.",
    "alt": "Lace-sleeve top with woven bodice in a heritage interior",
    "width": 1600,
    "height": 2043,
@@ -361,7 +367,7 @@
   },
   {
    "id": "27",
-   "title": "On the stair",
+   "title": "Making an entrance, one step at a time.",
    "alt": "Lace-sleeve top and black split skirt on a lamplit staircase",
    "width": 1600,
    "height": 2667,
@@ -371,7 +377,7 @@
   },
   {
    "id": "29",
-   "title": "Among old things",
+   "title": "Antiques, and one modern classic.",
    "alt": "Lace-sleeve woven top among antique furniture",
    "width": 1600,
    "height": 2043,
@@ -381,7 +387,7 @@
   },
   {
    "id": "30",
-   "title": "A heritage frame",
+   "title": "Old wood, new rules.",
    "alt": "Portrait in a lace-sleeve woven top in a wood-panelled room",
    "width": 1600,
    "height": 2043,
