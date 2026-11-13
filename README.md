@@ -7,17 +7,16 @@ Jost for navigation and details.
 ## The story
 
 The photographs are grouped by mood into five chapters that follow one day:
+I Morning, II In Transit, III A Pause, IV Soft Light, V Evening.
 
-| | Chapter | Mood | Layout |
-|---|---|---|---|
-| I | Morning | bright, open streets | full-screen hero + floating exhibition |
-| II | In Transit | movement, crossings | floating exhibition, then a full-bleed moment |
-| III | A Pause | stillness, shopfronts, monochrome | floating exhibition, then a full-bleed moment |
-| IV | Soft Light | satin, florals, poolside | horizontal scrolling sequence |
-| V | Evening | lamplight, woven detail | layered silhouettes on black |
+**Homepage** (calm, curated by hand): a full-screen opening scene, the story
+in one line, **The Signature Look** (a drag-to-turn multi-angle viewer),
+**Five Moods** (one photograph per chapter, each leading into the
+collection), one full-bleed moment, **Held Close** (fabric and craft
+close-ups), a short horizontal sequence of selected frames, and a quiet close.
 
-Between them sit **The Signature Look**, a drag-to-turn multi-angle viewer, and
-**Held Close**, a fabric and craft section built from close-up crops.
+**Collection** (`collection.html`): every photograph, chapter by chapter,
+with filters and a full-screen viewer.
 
 ## How it is built
 
