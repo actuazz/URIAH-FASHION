@@ -6,8 +6,9 @@
   --ink-soft:#56544f;
   --mute:#8f8b83;
   --line:#e7e4de;
-  --gold:#b49a6c;
-  --gold-text:#7d6844;
+  --gold:#bfa77a;
+  --gold-text:#7f705a;
+  --label:#5f5c56;
   --gold-soft:#d9c9a8;
   --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
   --sans:"Jost","Futura","Helvetica Neue",Arial,sans-serif;
@@ -22,7 +23,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
 h1 i,h2 i{font-style:italic}
 :focus-visible{outline:1px solid var(--gold);outline-offset:4px}
-.eyebrow{font:400 11px/1.4 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--gold-text);margin:0}
+.eyebrow{font:400 11px/1.4 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--label);margin:0}
 .eyebrow--light{color:rgba(255,255,255,.86)}
 .line-link{display:inline-flex;gap:18px;align-items:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding-bottom:10px;background:linear-gradient(var(--gold),var(--gold)) left bottom/100% 1px no-repeat;transition:background-size .6s var(--ease)}
 .line-link:hover{background-size:40% 1px}
@@ -35,11 +36,12 @@ h1 i,h2 i{font-style:italic}
 .menu-toggle span{display:block;width:22px;height:1px;background:currentColor}
 .menu-toggle em{font-style:normal}
 .brand{display:flex;align-items:center;gap:10px}
-.brand-mark{width:30px;height:auto}
+.brand-mark{width:28px;height:auto}
 .brand-word{height:22px;width:auto}
-.brand-word--dark{display:none}
+.brand-word--dark,.brand-mark.brand-word--dark{display:none}
 .site-header.is-solid .brand-word--light{display:none}
 .site-header.is-solid .brand-word--dark{display:block}
+.site-header.is-solid .brand-word--light{display:none}
 .header-link{justify-self:end;font-size:11px;letter-spacing:.28em;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid transparent;transition:border-color .4s}
 .header-link:hover{border-color:var(--gold)}
 
@@ -108,15 +110,6 @@ h1 i,h2 i{font-style:italic}
 .piece:hover figcaption,.piece:focus-visible figcaption{opacity:1;transform:none}
 @media (hover:none){.piece figcaption{opacity:1;transform:none}}
 
-/* exhibition rows */
-.exhibition{display:flex;flex-direction:column;gap:18vh;padding-bottom:6vh}
-.ex-row{display:flex;align-items:flex-start;position:relative}
-.x-a1{width:40vw;margin-left:9vw}
-.x-a2{width:22vw;margin-left:10vw;margin-top:34vh}
-.x-b1{width:30vw;margin-left:57vw;margin-top:-8vh}
-.x-c1{width:20vw;margin-left:15vw;margin-top:-4vh}
-.x-c2{width:38vw;margin-left:12vw;margin-top:14vh}
-
 /* full-bleed interruption */
 .bleed{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--ink)}
 .bleed-img{position:absolute;inset:-8% 0;will-change:transform}
@@ -159,12 +152,12 @@ h1 i,h2 i{font-style:italic}
 .footer{border-top:1px solid var(--line);padding:90px var(--gutter) 30px}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;padding-bottom:70px}
 .footer-brand{display:flex;align-items:center;gap:12px}
-.footer-brand img:first-child{width:34px}
+.footer-brand img:first-child{width:30px}
 .footer-brand img:last-child{height:24px;width:auto}
 .footer-sign{font:400 clamp(26px,3vw,40px)/1.15 var(--serif);margin:0;text-align:right}
 .footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:50px 0 80px;border-top:1px solid var(--line)}
 .footer-cols div{display:flex;flex-direction:column;gap:14px;font-size:14px;color:var(--ink-soft)}
-.footer-cols b{font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-text);margin-bottom:6px}
+.footer-cols b{font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--label);margin-bottom:6px}
 .footer-cols p{margin:0;line-height:1.8;max-width:260px}
 .footer-cols a:hover{color:var(--ink)}
 .footer-base{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute)}
@@ -173,17 +166,21 @@ h1 i,h2 i{font-style:italic}
 .section-head h2{font-size:clamp(50px,6.6vw,104px);line-height:.95;margin:22px 0 0}
 .section-head p:not(.eyebrow){font-size:15px;line-height:1.85;color:var(--ink-soft);margin:26px 0 0;max-width:380px}
 
-/* ---------- five moods (homepage) ---------- */
-.moods{padding:clamp(40px,8vh,90px) 0 clamp(140px,20vh,220px)}
-.moods .section-head{padding:0 var(--gutter);max-width:1440px;margin:0 auto 14vh;padding-left:9vw}
-.mood{display:block;position:relative}
-.mood .piece-img img{transition:transform 1.8s var(--ease)}
-.mood:hover .piece-img img{transform:scale(1.035)}
-.mood-cap{display:flex;align-items:baseline;gap:14px;margin-top:16px}
+/* ---------- five moods (homepage): equal panels that open on hover ---------- */
+.moods{padding:clamp(40px,8vh,90px) 0 clamp(150px,22vh,240px)}
+.moods .section-head{max-width:1600px;margin:0 auto clamp(56px,9vh,100px);padding:0 var(--gutter)}
+.mood-row{display:flex;gap:clamp(10px,1.1vw,18px);height:min(78vh,820px);max-width:1600px;margin:0 auto;padding:0 var(--gutter)}
+.mood{flex:1 1 0;min-width:0;display:flex;flex-direction:column;transition:flex-grow 1.2s var(--ease)}
+.mood:hover,.mood:focus-visible{flex-grow:2.3}
+.mood-img{flex:1;min-height:0;overflow:hidden;background:#f4f2ee}
+.mood-img img{width:100%;height:100%;object-fit:cover;transition:transform 2s var(--ease),filter 1.2s var(--ease)}
+.mood:hover .mood-img img{transform:scale(1.03)}
+.mood-row:hover .mood:not(:hover) .mood-img img{filter:grayscale(.55) brightness(1.04)}
+.mood-cap{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:baseline;padding-top:20px;min-height:120px}
 .mood-cap span{font:400 11px var(--sans);letter-spacing:.2em;color:var(--gold-text)}
-.mood-cap b{font:italic 400 clamp(22px,2.2vw,32px)/1.1 var(--serif)}
-.mood-cap em{margin-left:auto;font-style:normal;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);padding-bottom:4px;background:linear-gradient(var(--gold),var(--gold)) left bottom/0 1px no-repeat;transition:background-size .6s var(--ease),color .4s}
-.mood:hover .mood-cap em{background-size:100% 1px;color:var(--ink)}
+.mood-cap b{font:italic 400 clamp(20px,1.9vw,30px)/1.1 var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mood-cap em{grid-column:2;font-style:normal;font-size:13px;line-height:1.7;color:var(--ink-soft);margin-top:10px;max-width:340px;opacity:0;transform:translateY(-6px);transition:opacity .8s var(--ease) .15s,transform .8s var(--ease) .15s}
+.mood:hover .mood-cap em,.mood:focus-visible .mood-cap em{opacity:1;transform:none}
 
 /* ---------- horizontal: intro + end panel ---------- */
 .h-intro .section-head h2{font-size:clamp(48px,5.4vw,88px)}
@@ -218,7 +215,14 @@ h1 i,h2 i{font-style:italic}
 .cat-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:clamp(40px,6vh,70px)}
 .cat-card figcaption{opacity:1;transform:none}
 @media (max-width:760px){
-  .moods .section-head{padding-left:var(--gutter);margin-bottom:70px}
+  .moods .section-head{margin-bottom:50px}
+  .mood-row{height:auto;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;gap:12px}
+  .mood-row::-webkit-scrollbar{display:none}
+  .mood{flex:0 0 72vw;scroll-snap-align:start}
+  .mood:hover,.mood:focus-visible{flex-grow:0}
+  .mood-img{flex:none;height:62vh}
+  .mood-cap em{opacity:1;transform:none}
+  .mood-row:hover .mood:not(:hover) .mood-img img{filter:none}
   .h-end{width:62vw;padding:20px 0 20px 26px;scroll-snap-align:center}
   .closing{padding:130px var(--gutter)}
   .page-collection main{padding-top:60px}
@@ -273,12 +277,6 @@ body.is-locked{overflow:hidden}
   .story{padding:110px var(--gutter) 90px}
   .signature{padding:40px var(--gutter) 110px;gap:44px}
   .sig-ui{grid-template-columns:80px 1fr 56px;gap:12px}
-  .exhibition{gap:70px}
-  .ex-row{flex-direction:column;gap:70px}
-  .ex-row .piece{margin:0}
-  .x-a1,.x-c2{width:80vw;margin-left:var(--gutter)!important}
-  .x-b1{width:72vw;margin-left:auto!important;margin-right:var(--gutter)}
-  .x-a2,.x-c1{width:58vw;margin-left:auto!important;margin-right:var(--gutter)}
   .bleed{height:78vh}
   .craft{padding:110px var(--gutter);gap:56px}
   .craft-grid{gap:0 14px}

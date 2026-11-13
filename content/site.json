@@ -118,6 +118,13 @@
     "pause": "11",
     "light": "26",
     "evening": "27"
+   },
+   "focus": {
+    "morning": "9% 72%",
+    "transit": "52% 62%",
+    "pause": "50% 66%",
+    "light": "50% 58%",
+    "evening": "56% 70%"
    }
   },
   "selected": {
@@ -262,7 +269,9 @@
    "width": 1600,
    "height": 2667,
    "hash": "2ebc353d1b133757",
-   "source": "drive:13.png"
+   "source": "drive:13.png",
+   "hidden": true,
+   "hidden_reason": "collage of frames already on the site"
   },
   {
    "id": "14",
@@ -302,7 +311,9 @@
    "width": 1600,
    "height": 2667,
    "hash": "9e841333641a9292",
-   "source": "drive:17.png"
+   "source": "drive:17.png",
+   "hidden": true,
+   "hidden_reason": "collage of frames already on the site"
   },
   {
    "id": "18",

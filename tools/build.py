@@ -63,7 +63,7 @@ def head(title, desc):
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="{e(desc)}">
 <title>{e(title)}</title>
-<link rel="icon" type="image/png" href="assets/uriah-va-mark.png">
+<link rel="icon" type="image/png" href="assets/va-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -77,7 +77,8 @@ def header(on_photo):
     return f'''<header class="site-header{"" if on_photo else " is-solid is-fixed-solid"}" data-header>
   <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" data-menu-open><span></span><em>Menu</em></button>
   <a class="brand" href="index.html" aria-label="URIAH home">
-    <img class="brand-mark" src="assets/uriah-va-mark.png" alt="">
+    <img class="brand-mark brand-word--light" src="assets/va-white.png" alt="">
+    <img class="brand-mark brand-word--dark" src="assets/va-black.png" alt="" aria-hidden="true">
     <img class="brand-word brand-word--light" src="assets/logo-white.png" alt="URIAH">
     <img class="brand-word brand-word--dark" src="assets/wordmark-black.png" alt="" aria-hidden="true">
   </a>
@@ -99,7 +100,7 @@ def menu(site):
 def footer():
     return f'''<footer class="footer">
   <div class="footer-top">
-    <a class="footer-brand" href="index.html"><img src="assets/uriah-va-mark.png" alt=""><img src="assets/wordmark-black.png" alt="URIAH"></a>
+    <a class="footer-brand" href="index.html"><img src="assets/va-black.png" alt=""><img src="assets/wordmark-black.png" alt="URIAH"></a>
     <p class="footer-sign">Elevated wear.<br><i>Everyday essentials.</i></p>
   </div>
   <div class="footer-cols">
@@ -189,31 +190,23 @@ def signature(site, by_id):
 </section>'''
 
 
-MOOD_SLOTS = ["x-a1", "x-a2", "x-b1", "x-c1", "x-c2"]
-MOOD_SIZES = {"x-a1": "(max-width:760px) 80vw, 40vw", "x-a2": "(max-width:760px) 62vw, 22vw",
-              "x-b1": "(max-width:760px) 72vw, 30vw", "x-c1": "(max-width:760px) 62vw, 20vw",
-              "x-c2": "(max-width:760px) 80vw, 38vw"}
-MOOD_SPEEDS = {"x-a1": "0.04", "x-a2": "0.12", "x-b1": "0.07", "x-c1": "0.13", "x-c2": "0.05"}
-
-
 def moods(site, by_id):
     m = site["features"]["moods"]
-    cards = []
-    for i, c in enumerate(site["chapters"]):
+    focus = m.get("focus", {})
+    panels = []
+    for c in site["chapters"]:
         pid = m["picks"].get(c["key"])
         if not pid:
             continue
         p = by_id[pid]
-        s = MOOD_SLOTS[i % len(MOOD_SLOTS)]
-        cards.append(
-            f'<a class="mood {s} reveal" data-speed="{MOOD_SPEEDS[s]}" href="collection.html#ch-{c["key"]}">'
-            f'<div class="piece-img">{img(p, MOOD_SIZES[s])}</div>'
-            f'<span class="mood-cap"><span>{c["numeral"]}</span><b>{e(c["title"])}</b><em>Enter</em></span></a>')
-    rows = [cards[0:2], cards[2:3], cards[3:5]]
-    body = "".join(f'<div class="ex-row">{"".join(r)}</div>' for r in rows if r)
+        fp = focus.get(c["key"], "50% 60%")
+        panels.append(
+            f'<a class="mood" href="collection.html#ch-{c["key"]}">'
+            f'<div class="mood-img">{img(p, "(max-width:760px) 72vw, 40vw", extra=f' style="object-position:{fp}"')}</div>'
+            f'<span class="mood-cap"><span>{c["numeral"]}</span><b>{e(c["title"])}</b><em>{e(c["line"])}</em></span></a>')
     return f'''<section class="moods" id="moods" aria-label="{e(m["title"])}">
   <header class="section-head reveal"><p class="eyebrow">{e(m["title"])}</p><h2>{m["heading"]}</h2></header>
-  <div class="exhibition">{body}</div>
+  <div class="mood-row reveal">{"".join(panels)}</div>
 </section>'''
 
 
@@ -228,7 +221,7 @@ def bleed(f, by_id):
 def craft(site):
     items = site["features"]["craft"]
     figs = "".join(
-        f'<figure class="craft-item craft-item--{i + 1} reveal" data-speed="{("0.03", "0.09", "0.05", "0.11")[i % 4]}">'
+        f'<figure class="craft-item craft-item--{i + 1} reveal">'
         f'<div class="piece-img"><img src="assets/{it["file"]}" loading="lazy" decoding="async" alt="{e(it["label"])}: close-up detail"></div>'
         f'<figcaption><b>{e(it["label"])}</b>{e(it["text"])}</figcaption></figure>'
         for i, it in enumerate(items))
@@ -271,14 +264,15 @@ def closing():
 # ---------- collection page ----------
 
 def collection(site):
-    total = len(site["photos"])
+    shown = [p for p in site["photos"] if not p.get("hidden")]
+    total = len(shown)
     filters = [f'<button class="filter is-active" data-filter="all">All <sup>{total}</sup></button>'] + [
         f'<button class="filter" data-filter="{c["key"]}"><span>{c["numeral"]}</span> {e(c["title"])} '
-        f'<sup>{sum(1 for p in site["photos"] if p["chapter"] == c["key"]):02d}</sup></button>'
+        f'<sup>{sum(1 for p in shown if p["chapter"] == c["key"]):02d}</sup></button>'
         for c in site["chapters"]]
     sections = []
     for c in site["chapters"]:
-        photos = [p for p in site["photos"] if p["chapter"] == c["key"]]
+        photos = [p for p in shown if p["chapter"] == c["key"]]
         if not photos:
             continue
         cards = "".join(piece(p, "cat-card", "(max-width:760px) 46vw, (max-width:1100px) 31vw, 24vw", c["title"]) for p in photos)
