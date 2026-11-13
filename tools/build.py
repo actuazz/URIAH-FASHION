@@ -146,7 +146,7 @@ def home(site, by_id, shown):
 </section>
 
 <section class="closeups-wrap">
-  <header class="section-head reveal"><h2>Up close</h2><p class="kicker">Details</p></header>
+  <header class="section-head section-head--tagline reveal"><h2>Elevated wear.<br><i>Everyday essentials.</i></h2><p class="kicker">The details</p></header>
   <div class="closeups">{closeups}</div>
 </section>
 

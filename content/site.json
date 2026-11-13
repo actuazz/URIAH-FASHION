@@ -36,8 +36,8 @@
    },
    {
     "file": "craft/sheen.webp",
-    "label": "Satin",
-    "text": "A ruffle that catches the light.",
+    "label": "Silk",
+    "text": "A silk ruffle that catches the light.",
     "look": "look-04"
    }
   ]
@@ -260,7 +260,7 @@
   {
    "id": "20",
    "title": "A softer statement",
-   "alt": "Blush satin ruffle top and floral shorts with a pink bag, outside a glass building",
+   "alt": "Blush silk ruffle top and floral shorts with a pink bag, outside a glass building",
    "width": 1600,
    "height": 2667,
    "hash": "4c203078763232b0",
@@ -385,9 +385,9 @@
   },
   {
    "key": "look-04",
-   "name": "Satin Ruffle Top, Floral Shorts",
+   "name": "Silk Ruffle Top, Floral Shorts",
    "pieces": [
-    "Mauve satin ruffle top",
+    "Mauve silk ruffle top",
     "Floral shorts"
    ]
   },
@@ -415,5 +415,6 @@
     "Black split skirt"
    ]
   }
- ]
+ ],
+ "tagline": "Elevated wear. Everyday essentials."
 }
