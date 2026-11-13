@@ -1,269 +1,180 @@
 {
  "story": {
   "title": "A Day, Considered",
-  "intro": "One day, five moods. Follow the light from the first street of the morning to the last warm room of the evening."
+  "intro": "Seven looks for the hours between the first coffee and the last light. Pieces made to be worn, not saved for later."
  },
- "chapters": [
-  {
-   "key": "morning",
-   "numeral": "I",
-   "title": "Morning",
-   "line": "The city before it fills. Soft colour, open streets, the day still undecided.",
-   "layout": "exhibition"
-  },
-  {
-   "key": "transit",
-   "numeral": "II",
-   "title": "In Transit",
-   "line": "Crossings, signals, a suitcase in tow. Clothes that keep their composure in motion.",
-   "layout": "exhibition"
-  },
-  {
-   "key": "pause",
-   "numeral": "III",
-   "title": "A Pause",
-   "line": "A shopfront, a ledge, a passing tram. The quiet minutes where style is most personal.",
-   "layout": "exhibition"
-  },
-  {
-   "key": "light",
-   "numeral": "IV",
-   "title": "Soft Light",
-   "line": "Satin, florals and water-bright afternoons. Everything a little lighter, a little slower.",
-   "layout": "horizontal"
-  },
-  {
-   "key": "evening",
-   "numeral": "V",
-   "title": "Evening",
-   "line": "Lamplight, old wood, woven detail. The day closes with a little more presence.",
-   "layout": "layered"
-  }
- ],
  "features": {
-  "hero": [
-   "02",
-   "03"
-  ],
-  "signature": {
-   "title": "The Lilac Print",
-   "kicker": "The Signature Look",
-   "text": "A black blouse, cut loose through the sleeve, over lilac floral wide-leg trousers. Our most-asked-about look, shown from every side.",
-   "details": [
-    [
-     "Top",
-     "Black draped blouse"
-    ],
-    [
-     "Trousers",
-     "Lilac floral, wide leg"
-    ],
-    [
-     "Carry",
-     "Structured mini bag"
-    ]
-   ],
-   "frames": [
-    "04",
-    "06",
-    "08",
-    "05"
-   ],
-   "labels": [
-    "Front",
-    "Turn",
-    "Full length",
-    "Detail"
-   ]
+  "opening": "02",
+  "moment": {
+   "id": "31",
+   "caption": "Coffee, then onwards."
   },
-  "fullbleed": [
-   {
-    "id": "09",
-    "focus": "38% 64%",
-    "caption": "Coffee, then onwards"
-   }
-  ],
-  "craft": [
+  "focus": {
+   "01": "14% 70%",
+   "23": "50% 70%",
+   "27": "55% 65%",
+   "16": "40% 60%"
+  },
+  "closeups": [
    {
     "file": "craft/print.webp",
-    "label": "The Print",
-    "text": "Tonal lilac florals, scaled to move with a wide leg.",
-    "from": "05"
+    "label": "Print",
+    "text": "Tonal lilac florals on a wide leg.",
+    "look": "look-02"
    },
    {
-    "file": "craft/weave.webp",
-    "label": "The Weave",
-    "text": "A woven bodice framed in sheer lace, made for evening.",
-    "from": "28"
+    "file": "craft/lace.webp",
+    "label": "Lace",
+    "text": "Sheer sleeves over a woven bodice.",
+    "look": "look-07"
    },
    {
     "file": "craft/texture.webp",
-    "label": "The Texture",
-    "text": "A textured check against a smooth, sculpted line.",
-    "from": "24"
+    "label": "Texture",
+    "text": "A woven check, softly structured.",
+    "look": "look-06"
    },
    {
     "file": "craft/sheen.webp",
-    "label": "The Sheen",
-    "text": "Soft satin ruffles that catch the daylight.",
-    "from": "21"
+    "label": "Satin",
+    "text": "A ruffle that catches the light.",
+    "look": "look-04"
    }
-  ],
-  "moods": {
-   "title": "Five moods",
-   "heading": "The day, in<br><i>five rooms.</i>",
-   "picks": {
-    "morning": "01",
-    "transit": "10",
-    "pause": "11",
-    "light": "26",
-    "evening": "27"
-   },
-   "focus": {
-    "morning": "9% 72%",
-    "transit": "52% 62%",
-    "pause": "50% 66%",
-    "light": "50% 58%",
-    "evening": "56% 70%"
-   }
-  },
-  "selected": {
-   "title": "Selected Frames",
-   "line": "A few pieces we keep returning to. The full collection waits at the end.",
-   "picks": [
-    "21",
-    "15",
-    "25",
-    "29",
-    "19",
-    "23"
-   ]
-  }
+  ]
  },
  "photos": [
   {
-   "id": "01",
-   "chapter": "morning",
-   "title": "Corner, mid-afternoon",
-   "alt": "Blush top and floral wide-leg trousers on a busy Hong Kong street corner",
-   "width": 1600,
-   "height": 2043,
-   "hash": "c4e034307072d300",
-   "source": "drive:1.png"
-  },
-  {
    "id": "02",
-   "chapter": "morning",
    "title": "Centre of the street",
    "alt": "Blush top and floral trousers, standing in the middle of a Hong Kong street lined with towers",
    "width": 1600,
    "height": 2043,
    "hash": "1e1e1e1d1f1f8024",
-   "source": "drive:2.png"
+   "source": "drive:2.png",
+   "look": "look-01"
+  },
+  {
+   "id": "01",
+   "title": "Corner, mid-afternoon",
+   "alt": "Blush top and floral wide-leg trousers on a busy Hong Kong street corner",
+   "width": 1600,
+   "height": 2043,
+   "hash": "c4e034307072d300",
+   "source": "drive:1.png",
+   "look": "look-01"
   },
   {
    "id": "03",
-   "chapter": "morning",
    "title": "In stride",
    "alt": "Walking across a Hong Kong street in a blush top and floral wide-leg trousers",
    "width": 1600,
    "height": 2043,
    "hash": "0e1e1f1e1b1b9110",
-   "source": "drive:3.png"
-  },
-  {
-   "id": "04",
-   "chapter": "pause",
-   "title": "A pause by the window",
-   "alt": "Black blouse and lilac floral trousers in front of a dark shopfront window",
-   "width": 1600,
-   "height": 2043,
-   "hash": "c7d6fc48584d5d56",
-   "source": "drive:5.png"
-  },
-  {
-   "id": "05",
-   "chapter": "pause",
-   "title": "Print and proportion",
-   "alt": "Close view of a black blouse with lilac floral wide-leg trousers and a small bag",
-   "width": 1600,
-   "height": 2043,
-   "hash": "9aace844d69696b6",
-   "source": "drive:6.png"
+   "source": "drive:3.png",
+   "look": "look-01"
   },
   {
    "id": "06",
-   "chapter": "pause",
    "title": "Quiet confidence",
    "alt": "Black blouse and lilac floral trousers, standing against a navy shopfront",
    "width": 1600,
    "height": 2043,
    "hash": "9e96d8488d9d9594",
-   "source": "drive:8.png"
+   "source": "drive:8.png",
+   "look": "look-02"
   },
   {
-   "id": "07",
-   "chapter": "pause",
-   "title": "In good company",
-   "alt": "Black blouse and floral trousers beside a passer-by in front of a shopfront",
+   "id": "05",
+   "title": "Print and proportion",
+   "alt": "Close view of a black blouse with lilac floral wide-leg trousers and a small bag",
    "width": 1600,
    "height": 2043,
-   "hash": "d6de645d3d381d1d",
-   "source": "drive:9.png"
+   "hash": "9aace844d69696b6",
+   "source": "drive:6.png",
+   "look": "look-02"
+  },
+  {
+   "id": "04",
+   "title": "A pause by the window",
+   "alt": "Black blouse and lilac floral trousers in front of a dark shopfront window",
+   "width": 1600,
+   "height": 2043,
+   "hash": "c7d6fc48584d5d56",
+   "source": "drive:5.png",
+   "look": "look-02"
   },
   {
    "id": "08",
-   "chapter": "pause",
    "title": "Hand to frame",
    "alt": "Black blouse and lilac floral trousers, adjusting sunglasses by a shop window",
    "width": 1600,
    "height": 2043,
    "hash": "c6e1d9d84b9b9d2d",
-   "source": "drive:10.png"
+   "source": "drive:10.png",
+   "look": "look-02"
   },
   {
-   "id": "09",
-   "chapter": "transit",
-   "title": "Coffee, then onwards",
-   "alt": "Black blouse and floral trousers, crossing outside a coffee shop with an orange suitcase",
+   "id": "07",
+   "title": "In good company",
+   "alt": "Black blouse and floral trousers beside a passer-by in front of a shopfront",
    "width": 1600,
    "height": 2043,
-   "hash": "234b4f2e6ee6462e",
-   "source": "drive:4.png"
+   "hash": "d6de645d3d381d1d",
+   "source": "drive:9.png",
+   "look": "look-02"
   },
   {
    "id": "10",
-   "chapter": "transit",
    "title": "Always in motion",
    "alt": "Black blouse and floral trousers, walking down a city street pulling an orange suitcase",
    "width": 1600,
    "height": 2043,
    "hash": "1f1f1e1b1c4cd10e",
-   "source": "drive:7.png"
+   "source": "drive:7.png",
+   "look": "look-02"
+  },
+  {
+   "id": "09",
+   "title": "Coffee, then onwards",
+   "alt": "Black blouse and floral trousers, crossing outside a coffee shop with an orange suitcase",
+   "width": 1600,
+   "height": 2043,
+   "hash": "234b4f2e6ee6462e",
+   "source": "drive:4.png",
+   "look": "look-02"
+  },
+  {
+   "id": "31",
+   "title": "The corner, wide",
+   "alt": "Wide view of a Hong Kong street corner with a coffee shop, a figure crossing with an orange suitcase",
+   "width": 1600,
+   "height": 1067,
+   "hash": "38ccccdcb8680f3f",
+   "source": "canva:DAHIlHPgXMQ:p31",
+   "look": "look-02"
   },
   {
    "id": "11",
-   "chapter": "pause",
    "title": "A quieter frame",
    "alt": "Black and white portrait, seated on a ledge in a black blouse and printed trousers",
    "width": 1600,
    "height": 2043,
    "hash": "bdb9b5963d1db227",
-   "source": "drive:11.png"
+   "source": "drive:11.png",
+   "look": "look-02"
   },
   {
    "id": "12",
-   "chapter": "pause",
    "title": "By the tram",
    "alt": "Black and white portrait seated beside a Hong Kong tram",
    "width": 1600,
    "height": 2043,
    "hash": "26a6a2ab3f333e0e",
-   "source": "drive:12.png"
+   "source": "drive:12.png",
+   "look": "look-02"
   },
   {
    "id": "13",
-   "chapter": "pause",
    "title": "Three moments",
    "alt": "Collage of three seated portraits in a black blouse and floral trousers",
    "width": 1600,
@@ -271,41 +182,61 @@
    "hash": "2ebc353d1b133757",
    "source": "drive:13.png",
    "hidden": true,
-   "hidden_reason": "collage of frames already on the site"
+   "hidden_reason": "collage of frames already on the site",
+   "look": "look-02"
+  },
+  {
+   "id": "19",
+   "title": "Between the crowd",
+   "alt": "Navy ruffle top and blue bag among pedestrians at a crossing",
+   "width": 1600,
+   "height": 2667,
+   "hash": "c5737372b2914b4e",
+   "source": "drive:19.png",
+   "look": "look-03"
   },
   {
    "id": "14",
-   "chapter": "transit",
    "title": "Blue against blue",
    "alt": "Navy ruffle top and black trousers at a crossing in front of a painted tram",
    "width": 1600,
    "height": 2043,
    "hash": "70190446322524bc",
-   "source": "drive:14.png"
+   "source": "drive:14.png",
+   "look": "look-03"
   },
   {
    "id": "15",
-   "chapter": "transit",
    "title": "On the crossing",
    "alt": "Navy ruffle top crossing a busy Hong Kong road with a tram behind",
    "width": 1600,
    "height": 2043,
    "hash": "613109496c493931",
-   "source": "drive:15.png"
+   "source": "drive:15.png",
+   "look": "look-03"
   },
   {
    "id": "16",
-   "chapter": "transit",
    "title": "Central, waiting",
    "alt": "Navy ruffle top, seated on the steps of a station entrance",
    "width": 1600,
    "height": 2043,
    "hash": "130794cc0c655b4f",
-   "source": "drive:16.png"
+   "source": "drive:16.png",
+   "look": "look-03"
+  },
+  {
+   "id": "18",
+   "title": "Under the signs",
+   "alt": "Navy ruffle top and blue bag walking beneath road signs",
+   "width": 1600,
+   "height": 2667,
+   "hash": "f5f76337b373536f",
+   "source": "drive:18.png",
+   "look": "look-03"
   },
   {
    "id": "17",
-   "chapter": "transit",
    "title": "Blue, layered",
    "alt": "Collage of a navy ruffle top and blue bag on a busy crossing",
    "width": 1600,
@@ -313,147 +244,176 @@
    "hash": "9e841333641a9292",
    "source": "drive:17.png",
    "hidden": true,
-   "hidden_reason": "collage of frames already on the site"
-  },
-  {
-   "id": "18",
-   "chapter": "transit",
-   "title": "Under the signs",
-   "alt": "Navy ruffle top and blue bag walking beneath road signs",
-   "width": 1600,
-   "height": 2667,
-   "hash": "f5f76337b373536f",
-   "source": "drive:18.png"
-  },
-  {
-   "id": "19",
-   "chapter": "transit",
-   "title": "Between the crowd",
-   "alt": "Navy ruffle top and blue bag among pedestrians at a crossing",
-   "width": 1600,
-   "height": 2667,
-   "hash": "c5737372b2914b4e",
-   "source": "drive:19.png"
-  },
-  {
-   "id": "20",
-   "chapter": "light",
-   "title": "A softer statement",
-   "alt": "Blush satin ruffle top and floral shorts with a pink bag, outside a glass building",
-   "width": 1600,
-   "height": 2667,
-   "hash": "4c203078763232b0",
-   "source": "drive:20.png"
+   "hidden_reason": "collage of frames already on the site",
+   "look": "look-03"
   },
   {
    "id": "21",
-   "chapter": "light",
    "title": "Details in daylight",
    "alt": "Blush ruffle top, floral shorts and pink crocodile bag by a railing",
    "width": 1600,
    "height": 2667,
    "hash": "03901aae3232b024",
-   "source": "drive:21.png"
+   "source": "drive:21.png",
+   "look": "look-04"
+  },
+  {
+   "id": "20",
+   "title": "A softer statement",
+   "alt": "Blush satin ruffle top and floral shorts with a pink bag, outside a glass building",
+   "width": 1600,
+   "height": 2667,
+   "hash": "4c203078763232b0",
+   "source": "drive:20.png",
+   "look": "look-04"
   },
   {
    "id": "22",
-   "chapter": "light",
    "title": "Pink, in hand",
    "alt": "Close view of a blush ruffle top, floral shorts and pink bag",
    "width": 1600,
    "height": 2667,
    "hash": "2220286f76313969",
-   "source": "drive:22.png"
+   "source": "drive:22.png",
+   "look": "look-04"
   },
   {
    "id": "23",
-   "chapter": "light",
    "title": "White walls, warm tones",
    "alt": "Mauve camisole and patterned midi skirt in front of white arches",
    "width": 1600,
    "height": 2667,
    "hash": "23cff491909331e8",
-   "source": "drive:26.png"
-  },
-  {
-   "id": "24",
-   "chapter": "light",
-   "title": "Texture, up close",
-   "alt": "Champagne puff-sleeve top with woven bodice, beside a pool",
-   "width": 1600,
-   "height": 2667,
-   "hash": "86864eddb1541c8c",
-   "source": "drive:23.png"
-  },
-  {
-   "id": "25",
-   "chapter": "light",
-   "title": "Late light",
-   "alt": "Close portrait in a champagne puff-sleeve top by the water",
-   "width": 1600,
-   "height": 2667,
-   "hash": "272606661874168c",
-   "source": "drive:24.png"
+   "source": "drive:26.png",
+   "look": "look-05"
   },
   {
    "id": "26",
-   "chapter": "light",
    "title": "By the water",
    "alt": "Champagne puff-sleeve crop top and satin wide-leg trousers beside a pool",
    "width": 1600,
    "height": 2667,
    "hash": "0013715979f979f9",
-   "source": "drive:25.png"
+   "source": "drive:25.png",
+   "look": "look-06"
   },
   {
-   "id": "27",
-   "chapter": "evening",
-   "title": "On the stair",
-   "alt": "Lace-sleeve top and black split skirt on a lamplit staircase",
+   "id": "24",
+   "title": "Texture, up close",
+   "alt": "Champagne puff-sleeve top with woven bodice, beside a pool",
    "width": 1600,
    "height": 2667,
-   "hash": "d8e4c49292930928",
-   "source": "drive:27.png"
+   "hash": "86864eddb1541c8c",
+   "source": "drive:23.png",
+   "look": "look-06"
+  },
+  {
+   "id": "25",
+   "title": "Late light",
+   "alt": "Close portrait in a champagne puff-sleeve top by the water",
+   "width": 1600,
+   "height": 2667,
+   "hash": "272606661874168c",
+   "source": "drive:24.png",
+   "look": "look-06"
   },
   {
    "id": "28",
-   "chapter": "evening",
    "title": "Woven detail",
    "alt": "Lace-sleeve top with woven bodice in a heritage interior",
    "width": 1600,
    "height": 2043,
    "hash": "913909ad45969bca",
-   "source": "drive:28.png"
+   "source": "drive:28.png",
+   "look": "look-07"
+  },
+  {
+   "id": "27",
+   "title": "On the stair",
+   "alt": "Lace-sleeve top and black split skirt on a lamplit staircase",
+   "width": 1600,
+   "height": 2667,
+   "hash": "d8e4c49292930928",
+   "source": "drive:27.png",
+   "look": "look-07"
   },
   {
    "id": "29",
-   "chapter": "evening",
    "title": "Among old things",
    "alt": "Lace-sleeve woven top among antique furniture",
    "width": 1600,
    "height": 2043,
    "hash": "9c9c4cc8d9e8da98",
-   "source": "drive:29.png"
+   "source": "drive:29.png",
+   "look": "look-07"
   },
   {
    "id": "30",
-   "chapter": "evening",
    "title": "A heritage frame",
    "alt": "Portrait in a lace-sleeve woven top in a wood-panelled room",
    "width": 1600,
    "height": 2043,
    "hash": "56540c4b4bcda6a3",
-   "source": "drive:30.png"
+   "source": "drive:30.png",
+   "look": "look-07"
+  }
+ ],
+ "looks": [
+  {
+   "key": "look-01",
+   "name": "Blush Camisole, Floral Trousers",
+   "pieces": [
+    "Blush crinkle camisole",
+    "Floral wide-leg trousers"
+   ]
   },
   {
-   "id": "31",
-   "chapter": "transit",
-   "title": "The corner, wide",
-   "alt": "Wide view of a Hong Kong street corner with a coffee shop, a figure crossing with an orange suitcase",
-   "width": 1600,
-   "height": 1067,
-   "hash": "38ccccdcb8680f3f",
-   "source": "canva:DAHIlHPgXMQ:p31"
+   "key": "look-02",
+   "name": "Black Blouse, Lilac Print Trousers",
+   "pieces": [
+    "Black draped blouse",
+    "Lilac floral wide-leg trousers"
+   ]
+  },
+  {
+   "key": "look-03",
+   "name": "Navy Tiered Top",
+   "pieces": [
+    "Navy tiered strapless top",
+    "Black wide-leg trousers"
+   ]
+  },
+  {
+   "key": "look-04",
+   "name": "Satin Ruffle Top, Floral Shorts",
+   "pieces": [
+    "Mauve satin ruffle top",
+    "Floral shorts"
+   ]
+  },
+  {
+   "key": "look-05",
+   "name": "Mauve Camisole, Printed Midi Skirt",
+   "pieces": [
+    "Mauve camisole",
+    "Patterned midi skirt"
+   ]
+  },
+  {
+   "key": "look-06",
+   "name": "Champagne Puff-Sleeve Set",
+   "pieces": [
+    "Puff-sleeve top with woven bodice",
+    "Satin wide-leg trousers"
+   ]
+  },
+  {
+   "key": "look-07",
+   "name": "Lace-Sleeve Woven Top",
+   "pieces": [
+    "Woven top with sheer lace sleeves",
+    "Black split skirt"
+   ]
   }
  ]
 }

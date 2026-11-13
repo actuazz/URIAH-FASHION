@@ -25,16 +25,14 @@ comes from `content/site.json`; `index.html` is generated from it.
    collages that combine several photos (they repeat frames already shown).
 4. **Get it at full quality.** Export just those pages again as `png` with
    `export_quality: "pro"` and download them.
-5. **Place it in the story.** Choose the chapter whose mood fits best. The
-   chapters, in story order, are in `content/site.json`:
-   - `morning`: bright, open streets, the day beginning
-   - `transit`: movement, crossings, travel, the city in motion
-   - `pause`: still, quiet, shopfronts, seated, monochrome
-   - `light`: soft daylight, satin, florals, poolside, airy
-   - `evening`: warm lamplight, interiors, rich detail, night
-   Write a short, quiet title (2–4 words, sentence case, e.g. "Late light")
-   and a plain alt text describing the outfit and setting. Then run:
-   `python3 tools/ingest.py <png> --chapter <key> --title "<title>" --alt "<alt>" --source "canva:DAHIlHPgXMQ:p<N>"`
+5. **Place it in a look.** Each look in `content/site.json` → `looks` is one
+   outfit. If the photo shows an outfit that already has a look, use that
+   look's key (e.g. `look-02`). If it is a new outfit, add a new entry to
+   `looks` with the next number, a plain descriptive `name` (the pieces, e.g.
+   "Ivory Shirt, Pleated Skirt") and its `pieces`. Write a short title
+   (2–4 words, sentence case) and a plain alt text describing the outfit and
+   setting. Then run:
+   `python3 tools/ingest.py <png> --look <key> --title "<title>" --alt "<alt>" --source "canva:DAHIlHPgXMQ:p<N>"`
 6. **Rebuild** with `python3 tools/build.py`, and check that the page opens
    with no missing images.
 7. **Publish.** Commit with a message like
@@ -46,11 +44,10 @@ comes from `content/site.json`; `index.html` is generated from it.
 
 - Removing a page in Canva does **not** remove it from the site. Delete its
   entry from `content/site.json` and its files in `assets/photos/` by hand.
-- New photos appear on the **collection page** (`collection.html`), in their
-  chapter. The **homepage** is curated by hand in `content/site.json` →
-  `features` (hero, signature look, five moods, full-bleed moment, fabric
-  crops, selected frames) and is never changed by the sync, so it stays calm.
+- New photos appear on **The Looks** page (`looks.html`), in their look. The **homepage** is curated by hand in `content/site.json` →
+  `features` and shows one photo per look, so a brand-new look also gets a
+  card on the homepage automatically.
 - The fabric close-ups in `assets/craft/` are hand-cut crops and are not
   regenerated when a photo is replaced.
-- To move a photo to another chapter, change its `chapter` in
-  `content/site.json` and run `python3 tools/build.py`.
+- To move a photo to another look, change its `look` in `content/site.json`
+  and run `python3 tools/build.py`. The first photo of a look leads it.

@@ -10,10 +10,10 @@ Check only (prints NEW, DUPLICATE of <id>, or UPDATED <id>):
     python3 tools/ingest.py path/to/image.png --replace <id> --source "canva:DAHIlHPgXMQ:p<N>"
 
 Add (creates web sizes, appends to content/site.json; then run tools/build.py):
-    python3 tools/ingest.py path/to/image.jpg --chapter light \
+    python3 tools/ingest.py path/to/image.jpg --look look-06 \
         --title "Late light" --alt "Champagne top beside a pool" --source "canva:DAHIlHPgXMQ:p33"
 
-Chapters are the moods defined in content/site.json ("chapters" -> "key").
+Looks are the outfits defined in content/site.json ("looks" -> "key").
 Duplicates are found with a perceptual hash, so a re-export or resize of a
 photo that is already on the site is recognised and skipped.
 """
@@ -70,7 +70,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("image")
     ap.add_argument("--check", action="store_true")
-    ap.add_argument("--chapter")
+    ap.add_argument("--look")
     ap.add_argument("--title")
     ap.add_argument("--alt")
     ap.add_argument("--source", default="")
@@ -105,18 +105,18 @@ def main():
     if dup:
         print(f"skipped: already on the site as {dup}")
         return
-    chapters = {c["key"] for c in site["chapters"]}
-    if a.chapter not in chapters or not a.title or not a.alt:
-        sys.exit(f"--chapter (one of {sorted(chapters)}), --title and --alt are required")
+    looks = {l["key"] for l in site["looks"]}
+    if a.look not in looks or not a.title or not a.alt:
+        sys.exit(f"--look (one of {sorted(looks)}), --title and --alt are required")
     if im.width < 1200:
         print(f"warning: only {im.width}px wide; it may look soft when opened full-screen")
     pid = f"{max(int(p['id']) for p in site['photos']) + 1:02d}"
     w, hgt = save_sizes(im, pid)
-    site["photos"].append({"id": pid, "chapter": a.chapter, "title": a.title, "alt": a.alt,
+    site["photos"].append({"id": pid, "look": a.look, "title": a.title, "alt": a.alt,
                            "width": w, "height": hgt, "hash": h, "source": a.source})
     with open(SITE, "w", encoding="utf-8") as f:
         json.dump(site, f, indent=1, ensure_ascii=False)
-    print(f"added {pid} to {a.chapter}")
+    print(f"added {pid} to {a.look}")
 
 
 if __name__ == "__main__":

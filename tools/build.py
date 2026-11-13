@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Build index.html (the homepage) and collection.html (the full catalogue)
-from content/site.json.
+"""Build index.html (home) and looks.html (every look) from content/site.json.
 
 Run from the repository root:  python3 tools/build.py
 
-- The homepage is curated by hand in site.json -> "features". New photos do
-  not change it, so it stays calm.
-- The collection page shows every photo, grouped by chapter (mood), in the
-  order they appear in site.json. New photos land here automatically.
+Photos belong to looks (one outfit each). The homepage is curated in
+site.json -> "features" and shows one photo per look; looks.html shows every
+photo, look by look. Hidden photos (e.g. collages) are never shown.
 """
 import html
 import json
@@ -16,8 +14,8 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = "assets/photos"
 FB = "https://www.facebook.com/Uriah.FashionHouse/"
+MSG = "https://m.me/Uriah.FashionHouse"
 e = html.escape
-q = chr(34)
 
 
 def load():
@@ -25,109 +23,78 @@ def load():
         return json.load(f)
 
 
-def has(path):
-    return os.path.exists(os.path.join(ROOT, path))
-
-
 def srcset(pid):
     parts = [f"{P}/{pid}-800.webp 800w", f"{P}/{pid}-1600.webp 1600w"]
-    if has(f"{P}/{pid}-2400.webp"):
+    if os.path.exists(os.path.join(ROOT, P, f"{pid}-2400.webp")):
         parts.append(f"{P}/{pid}-2400.webp 2400w")
     return ", ".join(parts)
 
 
-def img(p, sizes, lazy=True, extra="", cls=""):
-    c = f" class={q}{cls}{q}" if cls else ""
-    lz = f" loading={q}lazy{q}" if lazy else ""
-    return (f'<img{c} src="{P}/{p["id"]}-1600.webp" srcset="{srcset(p["id"])}" sizes="{sizes}" '
-            f'width="{p["width"]}" height="{p["height"]}"{lz} decoding="async" alt="{e(p["alt"])}"{extra}>')
+def img(p, sizes, focus=None, lazy=True):
+    style = f' style="object-position:{focus}"' if focus else ""
+    lz = ' loading="lazy"' if lazy else ""
+    return (f'<img src="{P}/{p["id"]}-1600.webp" srcset="{srcset(p["id"])}" sizes="{sizes}" width="{p["width"]}" '
+            f'height="{p["height"]}"{lz} decoding="async" alt="{e(p["alt"])}"{style}>')
 
 
-def piece(p, cls, sizes, chapter, speed=None):
-    """A photograph that opens in the full-screen viewer."""
-    sp = f' data-speed="{speed}"' if speed else ""
-    return (f'<figure class="piece {cls} reveal"{sp} data-full="{P}/{p["id"]}-1600.webp" data-title="{e(p["title"])}" '
-            f'data-chapter="{e(chapter)}" tabindex="0">'
-            f'<div class="piece-img">{img(p, sizes)}</div>'
-            f'<figcaption><span>{p["id"]}</span>{e(p["title"])}</figcaption></figure>')
+def num(look):
+    return look["key"].split("-")[1]
 
 
-# ---------- shared chrome ----------
+# ---------- shared ----------
 
-def head(title, desc):
+def head(title):
     return f'''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#ffffff">
-<meta name="description" content="{e(desc)}">
+<meta name="theme-color" content="#f7f5f0">
+<meta name="description" content="URIAH — Elevated wear. Everyday essentials. A Day, Considered: seven looks.">
 <title>{e(title)}</title>
 <link rel="icon" type="image/png" href="assets/va-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>'''
 
 
-def header(on_photo):
-    right = '<a class="header-link" href="collection.html">Collection</a>' if on_photo else \
-        '<a class="header-link" href="index.html">Home</a>'
-    return f'''<header class="site-header{"" if on_photo else " is-solid is-fixed-solid"}" data-header>
-  <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" data-menu-open><span></span><em>Menu</em></button>
-  <a class="brand" href="index.html" aria-label="URIAH home">
-    <img class="brand-mark brand-word--light" src="assets/va-white.png" alt="">
-    <img class="brand-mark brand-word--dark" src="assets/va-black.png" alt="" aria-hidden="true">
-    <img class="brand-word brand-word--light" src="assets/logo-white.png" alt="URIAH">
-    <img class="brand-word brand-word--dark" src="assets/wordmark-black.png" alt="" aria-hidden="true">
-  </a>
-  {right}
+def header(current):
+    def link(href, label, key):
+        cur = ' aria-current="page"' if key == current else ""
+        return f'<a href="{href}"{cur}>{label}</a>'
+    return f'''<header class="site-header">
+  <a class="brand" href="index.html" aria-label="URIAH home"><img src="assets/va-black.png" alt=""><img class="brand-word" src="assets/wordmark-black.png" alt="URIAH"></a>
+  <nav class="nav" aria-label="Main">{link("looks.html", "The Looks", "looks")}{link("index.html#order", "How to order", "order")}</nav>
 </header>'''
-
-
-def menu(site):
-    items = "".join(
-        f'<li><a href="collection.html#ch-{c["key"]}"><span>{c["numeral"]}</span>{e(c["title"])}</a></li>'
-        for c in site["chapters"])
-    return f'''<div class="menu" id="menu" hidden data-menu>
-  <button class="menu-close" aria-label="Close menu" data-menu-close>Close</button>
-  <nav aria-label="Site"><p class="eyebrow">{e(site["story"]["title"])}</p><ol>{items}</ol>
-  <div class="menu-links"><a href="index.html">Home</a><a href="collection.html">The full collection</a><a href="index.html#signature">The signature look</a><a href="{FB}" target="_blank" rel="noopener">Enquiries ↗</a></div></nav>
-</div>'''
 
 
 def footer():
     return f'''<footer class="footer">
-  <div class="footer-top">
+  <div class="footer-inner">
     <a class="footer-brand" href="index.html"><img src="assets/va-black.png" alt=""><img src="assets/wordmark-black.png" alt="URIAH"></a>
-    <p class="footer-sign">Elevated wear.<br><i>Everyday essentials.</i></p>
+    <p class="footer-sign">Elevated wear. Everyday essentials.</p>
+    <nav class="footer-links" aria-label="Footer"><a href="looks.html">The Looks</a><a href="index.html#order">How to order</a><a href="{FB}" target="_blank" rel="noopener">Facebook ↗</a></nav>
   </div>
-  <div class="footer-cols">
-    <div><b>Explore</b><a href="index.html">Home</a><a href="collection.html">The collection</a><a href="index.html#signature">Signature look</a></div>
-    <div><b>Enquiries</b><p>For sizing, availability and orders, message us directly.</p><a href="{FB}" target="_blank" rel="noopener">Facebook ↗</a></div>
-    <div><b>House</b><p>Considered style for everyday living. Philippines.</p></div>
-  </div>
-  <div class="footer-base"><span>© <span data-year></span> URIAH</span><a href="#top">Back to top ↑</a></div>
+  <p class="footer-base">© <span data-year></span> URIAH · Philippines</p>
 </footer>'''
 
 
 def lightbox():
-    return f'''<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph viewer" data-lightbox>
-  <div class="lb-top"><span data-lb-count></span><button data-lb-close>Close</button></div>
+    return f'''<div class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph" data-lightbox>
+  <button class="lb-close" data-lb-close>Close</button>
   <figure class="lb-figure"><img src="" alt="" data-lb-img></figure>
-  <div class="lb-bottom"><div><span class="eyebrow" data-lb-chapter></span><b data-lb-title></b></div>
-  <div class="lb-nav"><button data-lb-prev aria-label="Previous photograph">←</button><button data-lb-next aria-label="Next photograph">→</button><a class="line-link" href="{FB}" target="_blank" rel="noopener">Ask about this look <span>↗</span></a></div></div>
+  <div class="lb-bar"><span data-lb-caption></span><span class="lb-nav"><button data-lb-prev aria-label="Previous photograph">←</button><span data-lb-count></span><button data-lb-next aria-label="Next photograph">→</button></span></div>
 </div>'''
 
 
-def page(title, desc, body, on_photo, site):
-    return f'''{head(title, desc)}
-<body class="{"page-home" if on_photo else "page-collection"}">
+def page(title, current, body):
+    return f'''{head(title)}
+<body>
 <!-- Generated by tools/build.py from content/site.json. Edit those, not this file. -->
-{header(on_photo)}
-{menu(site)}
-<main id="top">
+{header(current)}
+<main>
 {body}
 </main>
 {footer()}
@@ -138,176 +105,111 @@ def page(title, desc, body, on_photo, site):
 '''
 
 
-# ---------- homepage sections ----------
+# ---------- home ----------
 
-def hero(site, by_id):
-    ids = site["features"]["hero"]
-    first = next(c for c in site["chapters"] if c["key"] == by_id[ids[0]]["chapter"])
-    panes = "".join(f'<div class="hero-pane hero-pane--{i}">{img(by_id[pid], "100vw", lazy=False)}</div>'
-                    for i, pid in enumerate(ids))
-    return f'''<section class="hero" aria-label="Introduction">
-  {panes}
-  <div class="hero-text">
-    <p class="eyebrow eyebrow--light">{first["numeral"]} &nbsp;·&nbsp; {e(first["title"])}</p>
-    <h1>A Day,<br><i>Considered</i></h1>
-  </div>
-  <a class="hero-scroll" href="#story" aria-label="Scroll to the story"><span>Scroll</span><i></i></a>
-</section>'''
-
-
-def story(site):
-    return f'''<section class="story" id="story">
-  <p class="eyebrow reveal">The URIAH Point of View</p>
-  <p class="story-lede reveal">{e(site["story"]["intro"])}</p>
-</section>'''
-
-
-def signature(site, by_id):
-    s = site["features"]["signature"]
-    frames = [by_id[f] for f in s["frames"]]
-    labels = s.get("labels") or [f"View {i + 1}" for i in range(len(frames))]
-    imgs = "".join(
-        f'<img class="sig-frame" src="{P}/{p["id"]}-1600.webp" srcset="{srcset(p["id"])}" sizes="(max-width:760px) 90vw, 46vw" '
-        f'width="{p["width"]}" height="{p["height"]}" alt="{e(p["alt"])}" data-label="{e(labels[i])}" draggable="false">'
-        for i, p in enumerate(frames))
-    stops = "".join(f'<button class="sig-stop" data-stop="{i}" aria-label="{e(l)}"></button>' for i, l in enumerate(labels))
-    details = "".join(f"<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>" for k, v in s["details"])
-    w, h = frames[0]["width"], frames[0]["height"]
-    return f'''<section class="signature" id="signature" aria-label="{e(s["kicker"])}">
-  <div class="sig-copy reveal">
-    <p class="eyebrow">{e(s["kicker"])}</p>
-    <h2>{e(s["title"])}</h2>
-    <p class="sig-text">{e(s["text"])}</p>
-    <dl class="sig-details">{details}</dl>
-  </div>
-  <div class="sig-viewer reveal">
-    <div class="sig-stage" tabindex="0" role="slider" aria-label="Turn the look: drag, or use the arrow keys" aria-valuemin="1" aria-valuemax="{len(frames)}" aria-valuenow="1" style="aspect-ratio:{w}/{h}" data-sig>
-      {imgs}
-      <span class="sig-hint" aria-hidden="true"><i>⟷</i> Drag to turn</span>
-    </div>
-    <div class="sig-ui"><span class="sig-label" data-sig-label>{e(labels[0])}</span><div class="sig-stops">{stops}<i class="sig-progress" data-sig-progress></i></div><span class="sig-count" data-sig-count>01 / {len(frames):02d}</span></div>
-  </div>
-</section>'''
-
-
-def moods(site, by_id):
-    m = site["features"]["moods"]
-    focus = m.get("focus", {})
-    panels = []
-    for c in site["chapters"]:
-        pid = m["picks"].get(c["key"])
-        if not pid:
-            continue
-        p = by_id[pid]
-        fp = focus.get(c["key"], "50% 60%")
-        panels.append(
-            f'<a class="mood" href="collection.html#ch-{c["key"]}">'
-            f'<div class="mood-img">{img(p, "(max-width:760px) 72vw, 40vw", extra=f' style="object-position:{fp}"')}</div>'
-            f'<span class="mood-cap"><span>{c["numeral"]}</span><b>{e(c["title"])}</b><em>{e(c["line"])}</em></span></a>')
-    return f'''<section class="moods" id="moods" aria-label="{e(m["title"])}">
-  <header class="section-head reveal"><p class="eyebrow">{e(m["title"])}</p><h2>{m["heading"]}</h2></header>
-  <div class="mood-row reveal">{"".join(panels)}</div>
-</section>'''
-
-
-def bleed(f, by_id):
-    p = by_id[f["id"]]
-    return f'''<section class="bleed" aria-label="{e(f["caption"])}">
-  <div class="bleed-img" data-bleed>{img(p, "100vw", extra=f' style="object-position:{f["focus"]}"')}</div>
-  <p class="bleed-caption"><span>{p["id"]}</span>{e(f["caption"])}</p>
-</section>'''
-
-
-def craft(site):
-    items = site["features"]["craft"]
-    figs = "".join(
-        f'<figure class="craft-item craft-item--{i + 1} reveal">'
-        f'<div class="piece-img"><img src="assets/{it["file"]}" loading="lazy" decoding="async" alt="{e(it["label"])}: close-up detail"></div>'
-        f'<figcaption><b>{e(it["label"])}</b>{e(it["text"])}</figcaption></figure>'
-        for i, it in enumerate(items))
-    return f'''<section class="craft" id="craft" aria-label="Fabric and craft">
-  <div class="craft-head reveal">
-    <p class="eyebrow">Fabric &amp; Craft</p>
-    <h2>Held<br><i>close.</i></h2>
-    <p>We begin with how a piece feels against the skin, then how it falls when you move. The details here are where that thinking lives.</p>
-  </div>
-  <div class="craft-grid">{figs}</div>
-</section>'''
-
-
-H_SHAPES = ["h-1", "h-2", "h-3", "h-4"]
-
-
-def selected(site, by_id, chapter_title):
-    s = site["features"]["selected"]
-    figs = "".join(piece(by_id[pid], H_SHAPES[i % 4], "(max-width:760px) 70vw, 34vw", chapter_title(by_id[pid]))
-                   for i, pid in enumerate(s["picks"]))
-    return f'''<section class="chapter--horizontal" id="selected" data-hscroll aria-label="{e(s["title"])}">
-  <div class="h-sticky">
-    <div class="h-track" data-htrack>
-      <div class="h-intro"><header class="section-head"><p class="eyebrow">{e(s["title"])}</p><h2>Kept<br><i>close.</i></h2><p>{e(s["line"])}</p></header><span class="h-cue">Continue <i></i></span></div>
-      {figs}
-      <a class="h-end" href="collection.html"><span class="eyebrow">The full collection</span><b>See every<br><i>frame</i></b><em>→</em></a>
-    </div>
-    <div class="h-progress" aria-hidden="true"><i data-hprogress></i></div>
-  </div>
-</section>'''
-
-
-def closing():
-    return '''<section class="closing">
-  <p class="eyebrow reveal">The end of the day</p>
-  <p class="closing-line reveal">Until<br><i>tomorrow.</i></p>
-</section>'''
-
-
-# ---------- collection page ----------
-
-def collection(site):
-    shown = [p for p in site["photos"] if not p.get("hidden")]
-    total = len(shown)
-    filters = [f'<button class="filter is-active" data-filter="all">All <sup>{total}</sup></button>'] + [
-        f'<button class="filter" data-filter="{c["key"]}"><span>{c["numeral"]}</span> {e(c["title"])} '
-        f'<sup>{sum(1 for p in shown if p["chapter"] == c["key"]):02d}</sup></button>'
-        for c in site["chapters"]]
-    sections = []
-    for c in site["chapters"]:
-        photos = [p for p in shown if p["chapter"] == c["key"]]
+def home(site, by_id, shown):
+    f = site["features"]
+    op = by_id[f["opening"]]
+    mo = by_id[f["moment"]["id"]]
+    focus = f.get("focus", {})
+    cards = []
+    for look in site["looks"]:
+        photos = [p for p in shown if p["look"] == look["key"]]
         if not photos:
             continue
-        cards = "".join(piece(p, "cat-card", "(max-width:760px) 46vw, (max-width:1100px) 31vw, 24vw", c["title"]) for p in photos)
-        sections.append(f'''<section class="cat-chapter" id="ch-{c["key"]}" data-chapter="{c["key"]}">
-  <header class="cat-head reveal"><span class="chapter-no">{c["numeral"]}</span><h2>{e(c["title"])}</h2><p>{e(c["line"])}</p><span class="cat-count">{len(photos):02d} frames</span></header>
-  <div class="cat-grid" data-masonry>{cards}</div>
-</section>''')
-    return f'''<section class="cat-intro">
-  <p class="eyebrow">{e(site["story"]["title"])}</p>
-  <h1>The<br><i>Collection</i></h1>
-  <p>Every frame, arranged by the mood of the day it belongs to. Select a photograph to see it in full.</p>
+        lead = photos[0]
+        cards.append(
+            f'<a class="look-card reveal" href="looks.html#{look["key"]}">'
+            f'<div class="ph ph--45">{img(lead, "(max-width:760px) 45vw, 23vw", focus.get(lead["id"]))}</div>'
+            f'<span class="look-no">Look {num(look)}</span><span class="look-name">{e(look["name"])}</span></a>')
+    cards.append('<a class="look-card look-card--all reveal" href="looks.html"><span>All looks</span><em>→</em></a>')
+    closeups = "".join(
+        f'<a class="closeup reveal" href="looks.html#{c["look"]}"><div class="ph ph--11"><img src="assets/{c["file"]}" loading="lazy" decoding="async" alt="{e(c["label"])}, close-up"></div>'
+        f'<b>{e(c["label"])}</b><span>{e(c["text"])}</span></a>' for c in f["closeups"])
+    return f'''<section class="opening">
+  <div class="opening-copy">
+    <p class="kicker">The collection</p>
+    <h1>{e(site["story"]["title"])}</h1>
+    <p class="lede">{e(site["story"]["intro"])}</p>
+    <a class="text-link" href="looks.html">See the looks <span>→</span></a>
+  </div>
+  <figure class="opening-photo"><div class="ph ph--45">{img(op, "(max-width:760px) 100vw, 44vw", focus.get(op["id"]), lazy=False)}</div></figure>
 </section>
-<nav class="cat-filters" aria-label="Filter by chapter" data-filters>{"".join(filters)}</nav>
+
+<section class="moment" aria-label="{e(f["moment"]["caption"])}">
+  <figure><div class="ph ph--moment">{img(mo, "100vw")}</div><figcaption>{e(f["moment"]["caption"])}</figcaption></figure>
+</section>
+
+<section class="looks-index" id="looks">
+  <header class="section-head reveal"><h2>The Looks</h2><p class="kicker">{len(cards) - 1} looks</p></header>
+  <div class="look-grid">{"".join(cards)}</div>
+</section>
+
+<section class="closeups-wrap">
+  <header class="section-head reveal"><h2>Up close</h2><p class="kicker">Details</p></header>
+  <div class="closeups">{closeups}</div>
+</section>
+
+<section class="order" id="order">
+  <header class="section-head reveal"><h2>How to order</h2><p class="kicker">Enquiries</p></header>
+  <ol class="steps reveal">
+    <li><span>01</span><b>Choose a look</b><p>Note its number, for example Look 02.</p></li>
+    <li><span>02</span><b>Send us a message</b><p>Tell us the look and your usual size. We reply with sizing and availability.</p></li>
+    <li><span>03</span><b>We confirm with you</b><p>Details, payment and delivery are arranged directly in the conversation.</p></li>
+  </ol>
+  <a class="button reveal" href="{MSG}" target="_blank" rel="noopener">Message URIAH <span>↗</span></a>
+</section>'''
+
+
+# ---------- looks page ----------
+
+def looks_page(site, shown):
+    focus = site["features"].get("focus", {})
+    index = "".join(f'<a href="#{l["key"]}"><span>{num(l)}</span>{e(l["name"])}</a>' for l in site["looks"]
+                    if any(p["look"] == l["key"] for p in shown))
+    sections = []
+    for look in site["looks"]:
+        photos = [p for p in shown if p["look"] == look["key"]]
+        if not photos:
+            continue
+        lead, rest = photos[0], photos[1:]
+        pieces = "".join(f"<li>{e(x)}</li>" for x in look["pieces"])
+        def tile(p, big=False):
+            shape = "ph--wide" if p["width"] > p["height"] else "ph--45"
+            sizes = "(max-width:760px) 100vw, 46vw" if big else "(max-width:760px) 50vw, 23vw"
+            return (f'<figure class="tile{" tile--lead" if big else ""}{" tile--wide" if shape == "ph--wide" else ""}" '
+                    f'data-full="{P}/{p["id"]}-1600.webp" data-caption="Look {num(look)} · {e(p["title"])}" tabindex="0">'
+                    f'<div class="ph {shape}">{img(p, sizes, focus.get(p["id"]))}</div></figure>')
+        sections.append(f'''<section class="look" id="{look["key"]}">
+  <div class="look-info">
+    <p class="look-no">Look {num(look)}</p>
+    <h2>{e(look["name"])}</h2>
+    <ul class="pieces">{pieces}</ul>
+    <p class="frames">{len(photos)} photograph{"s" if len(photos) != 1 else ""}</p>
+    <a class="text-link" href="{MSG}" target="_blank" rel="noopener">Ask about Look {num(look)} <span>↗</span></a>
+  </div>
+  <div class="look-photos">{tile(lead, True)}<div class="look-rest">{"".join(tile(p) for p in rest)}</div></div>
+</section>''')
+    return f'''<section class="looks-intro">
+  <p class="kicker">{e(site["story"]["title"])}</p>
+  <h1>The Looks</h1>
+  <nav class="look-index" aria-label="Looks">{index}</nav>
+</section>
 {"".join(sections)}'''
 
 
 def build():
     site = load()
     by_id = {p["id"]: p for p in site["photos"]}
-    ch = {c["key"]: c for c in site["chapters"]}
-    f = site["features"]
-    home = "\n".join([
-        hero(site, by_id), story(site), signature(site, by_id), moods(site, by_id),
-        *[bleed(b, by_id) for b in f["fullbleed"]], craft(site),
-        selected(site, by_id, lambda p: ch[p["chapter"]]["title"]), closing(),
-    ])
-    desc = f'URIAH — Elevated wear. Everyday essentials. {site["story"]["title"]}.'
+    shown = [p for p in site["photos"] if not p.get("hidden")]
     with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(page(f'URIAH — {site["story"]["title"]}', desc, home, True, site))
-    with open(os.path.join(ROOT, "collection.html"), "w", encoding="utf-8") as fh:
-        fh.write(page("URIAH — The Collection", desc, collection(site), False, site))
+        fh.write(page(f'URIAH — {site["story"]["title"]}', "home", home(site, by_id, shown)))
+    with open(os.path.join(ROOT, "looks.html"), "w", encoding="utf-8") as fh:
+        fh.write(page("URIAH — The Looks", "looks", looks_page(site, shown)))
     counts = {}
-    for p in site["photos"]:
-        counts[p["chapter"]] = counts.get(p["chapter"], 0) + 1
-    print("built index.html + collection.html:", len(site["photos"]), "photos", counts)
+    for p in shown:
+        counts[p["look"]] = counts.get(p["look"], 0) + 1
+    print(f"built index.html + looks.html: {len(shown)} photos shown in {len(counts)} looks", counts)
 
 
 if __name__ == "__main__":
