@@ -1,17 +1,18 @@
 # URIAH — House Website
 
-*A Day, Considered*: seven looks, presented simply. Warm paper, ink, Cormorant
-Garamond for titles and Jost for text. The photographs carry the page.
+*A Day, Considered.* Elevated wear. Everyday essentials.
 
 ## Pages
 
-- **Home** (`index.html`): the collection title, *Coffee, then onwards*, the
-  seven looks, close-up details, and how to order.
-- **The Looks** (`looks.html`): every photograph, look by look, with the
-  pieces in each look and a direct "Ask about Look 0N" message link.
+- **Home** (`index.html`): a full-screen opening, **the edits** (six moods of
+  the day, each a photograph beside a short caption and a link to its look),
+  **the looks** (one card per outfit), **the details** under the tagline, and
+  **how to order**.
+- **The Looks** (`looks.html`): the visual journal. Every photograph at its
+  natural shape with its caption, filterable by look; filtering shows the
+  look's pieces and an "Ask about Look 0N" link.
 
-Photos are shown in a consistent 4:5 frame with one gentle colour treatment so
-different shoots sit together; selecting a photo opens it in full, uncropped.
+Italiana for headings, DM Sans for text, warm off-white and muted gold.
 
 ## How it is built
 

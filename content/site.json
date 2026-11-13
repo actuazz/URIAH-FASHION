@@ -4,7 +4,6 @@
   "intro": "Seven looks for the hours between the first coffee and the last light. Pieces made to be worn, not saved for later."
  },
  "features": {
-  "opening": "02",
   "focus": {
    "01": "14% 70%",
    "23": "50% 70%",
@@ -37,14 +36,65 @@
     "look": "look-04"
    }
   ],
-  "feature": {
-   "id": "15",
-   "look": "look-03",
-   "kicker": "The City Edit",
-   "title": "Blue,|in motion.",
-   "text": "Confident colour and fluid silhouettes, captured in the rhythm of the city. Made for days that rarely stay in one place.",
-   "aside": "Navy / City / Movement"
-  }
+  "hero": [
+   "02",
+   "03"
+  ],
+  "edits_head": {
+   "kicker": "Explore the edits",
+   "title": "Different moods.|One point of view.",
+   "note": "A visual wardrobe, arranged by how the day feels. Select an edit to see the look and enquire."
+  },
+  "edits": [
+   {
+    "look": "look-01",
+    "photo": "03",
+    "overline": "The City Journal",
+    "title": "Out in|the world.",
+    "text": "Personal style in real places. Architectural lines, everyday streets and the moments between destinations.",
+    "aside": "Street / Travel / Personal style"
+   },
+   {
+    "look": "look-04",
+    "photo": "21",
+    "overline": "The Women's Edit",
+    "title": "Softness|with shape.",
+    "text": "Light, expressive pieces with a relaxed point of view. A little colour, a little movement, and an ease that feels personal.",
+    "aside": "Blush / Floral / Daylight"
+   },
+   {
+    "look": "look-03",
+    "photo": "17",
+    "overline": "The City Edit",
+    "title": "Blue,|in motion.",
+    "text": "Confident colour and fluid silhouettes, captured in the rhythm of the city. Made for days that rarely stay in one place.",
+    "aside": "Navy / City / Movement"
+   },
+   {
+    "look": "look-02",
+    "photo": "06",
+    "overline": "The Everyday Edit",
+    "title": "Grounded|in expression.",
+    "text": "Easy combinations, considered prints and pieces that feel like you. The everyday, with a little more intention.",
+    "aside": "Ease / Print / Monochrome"
+   },
+   {
+    "look": "look-06",
+    "photo": "26",
+    "overline": "The Afternoon Edit",
+    "title": "Ease,|by the water.",
+    "text": "A softer palette and gentle texture for slow, sunlit hours. Pieces that hold their shape and still let you breathe.",
+    "aside": "Champagne / Texture / Sunlight"
+   },
+   {
+    "look": "look-07",
+    "photo": "28",
+    "overline": "The Evening Edit",
+    "title": "Rooted,|and refined.",
+    "text": "Woven detail, sheer sleeves and a deeper palette. For evenings that ask for a little more presence.",
+    "aside": "Lace / Weave / Evening"
+   }
+  ]
  },
  "photos": [
   {
