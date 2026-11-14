@@ -288,3 +288,20 @@ body.is-locked{overflow:hidden}
 .board-swatch i{flex:1}
 .board-swatch em{position:absolute;right:10px;bottom:8px;font-style:normal;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.9);text-shadow:0 1px 6px rgba(0,0,0,.35)}
 @media (max-width:760px){.board{padding:8px;border-radius:12px}.board-grid,.board-col{gap:8px}}
+
+/* ---------- the edits as full-screen split panels (photo ~2/3, text centred in 1/3) ---------- */
+@media (min-width:761px){
+  .edits{padding-left:0!important;padding-right:0!important}
+  .edits .section-head{padding:0 var(--gutter)}
+  .edits .edit-row{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:0;max-width:none;margin:0 0 clamp(56px,8vh,96px);align-items:stretch}
+  .edits .edit-row--flip{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+  .edits .edit-row:last-child{margin-bottom:0}
+  .edits .edit-image{height:min(calc(100vh - 120px),900px);min-height:520px}
+  .edits .edit-image a{height:100%}
+  .edits .edit-image img{height:100%;aspect-ratio:auto}
+  .edits .image-no{top:22px;left:24px}
+  .edits .edit-copy,.edits .edit-row--flip .edit-copy{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px clamp(28px,4vw,72px)}
+  .edits .edit-copy h3{white-space:normal;font-size:clamp(40px,3.8vw,60px);margin:20px 0 22px}
+  .edits .edit-copy p{margin:0 auto 30px;max-width:340px}
+  .edits .edit-aside{margin-top:44px}
+}

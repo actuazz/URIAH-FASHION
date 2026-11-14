@@ -146,7 +146,7 @@ def edit_img(ed, p):
     """An edit may use a hand-made crop (ed["crop"] = file stem in assets/photos) to focus on the model."""
     c = ed.get("crop")
     if not c:
-        return img(p, "(max-width:760px) 100vw, 44vw", ed.get("focus"))
+        return img(p, "(max-width:760px) 100vw, 67vw", ed.get("focus"))
     return (f'<img src="{P}/{c}-1200.webp" srcset="{P}/{c}-800.webp 800w, {P}/{c}-1200.webp 1200w" '
             f'sizes="(max-width:760px) 100vw, 44vw" width="1200" height="1500" loading="lazy" decoding="async" alt="{e(p["alt"])}">')
 
