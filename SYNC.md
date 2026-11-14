@@ -31,7 +31,9 @@ comes from `content/site.json`; `index.html` is generated from it.
    `looks` with the next number, a plain descriptive `name` (the pieces, e.g.
    "Ivory Shirt, Pleated Skirt") and its `pieces`. Write a short title
    (2–4 words, sentence case) and a plain alt text describing the outfit and
-   setting. Then run:
+   setting. For a new look, also add a `palette` of four hex colours taken
+   from the garments (lightest first); it fills the look's colour swatch.
+   Then run:
    `python3 tools/ingest.py <png> --look <key> --title "<title>" --alt "<alt>" --source "canva:DAHIlHPgXMQ:p<N>"`
 6. **Rebuild** with `python3 tools/build.py`, and check that the page opens
    with no missing images.

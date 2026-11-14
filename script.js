@@ -36,67 +36,41 @@
     document.querySelectorAll(".reveal").forEach(n => io.observe(n));
   }
 
-  /* the looks: a sliding strip that drifts on its own, can be swiped or dragged, and paused */
-  const frame = document.querySelector("[data-strip]");
-  if (frame) {
-    const strip = frame.querySelector("[data-strip-scroll]");
-    const toggle = frame.querySelector("[data-strip-toggle]");
-    let paused = reduce, hover = false, holdUntil = 0, last = 0, acc = 0;
-    const setPaused = v => {
-      paused = v; frame.classList.toggle("is-paused", v);
-      toggle.setAttribute("aria-pressed", String(v));
-      toggle.setAttribute("aria-label", v ? "Play the sliding photographs" : "Pause the sliding photographs");
-    };
-    setPaused(paused);
-    toggle.addEventListener("click", () => setPaused(!paused));
-    strip.addEventListener("mouseenter", () => { hover = true; });
-    strip.addEventListener("mouseleave", () => { hover = false; });
-    const hold = () => { holdUntil = performance.now() + 2500; };
-    strip.addEventListener("touchstart", hold, { passive: true });
-    strip.addEventListener("wheel", hold, { passive: true });
-    // drag with the mouse
-    let down = false, startX = 0, startLeft = 0, moved = false;
-    strip.addEventListener("mousedown", ev => { down = true; moved = false; startX = ev.clientX; startLeft = strip.scrollLeft; strip.classList.add("is-dragging"); ev.preventDefault(); });
-    addEventListener("mousemove", ev => { if (!down) return; const dx = ev.clientX - startX; if (Math.abs(dx) > 4) moved = true; strip.scrollLeft = startLeft - dx; hold(); });
-    addEventListener("mouseup", () => { down = false; strip.classList.remove("is-dragging"); });
-    strip.addEventListener("click", ev => { if (moved) { ev.preventDefault(); moved = false; } }, true);
-    const loop = t => {
-      const dt = last ? Math.min(64, t - last) : 0; last = t;
-      const half = strip.scrollWidth / 2;
-      if (!paused && !hover && !down && t > holdUntil) {
-        acc += dt * 0.045;                 // about 45 px per second
-        const step = Math.floor(acc); acc -= step;
-        if (step) strip.scrollLeft += step;
-      }
-      if (half && strip.scrollLeft >= half) strip.scrollLeft -= half;
-      if (strip.scrollLeft <= 0 && half) strip.scrollLeft += half;
-      requestAnimationFrame(loop);
-    };
-    strip.scrollLeft = 1;
-    requestAnimationFrame(loop);
+  /* the looks collage: glide in on arrival; pause/play */
+  const collage = document.querySelector("[data-collage]");
+  if (collage) {
+    const toggle = collage.querySelector("[data-collage-toggle]");
+    toggle.addEventListener("click", () => {
+      const paused = collage.classList.toggle("is-paused");
+      toggle.setAttribute("aria-pressed", String(paused));
+      toggle.setAttribute("aria-label", paused ? "Play the moving photographs" : "Pause the moving photographs");
+    });
+    if (reduce || !("IntersectionObserver" in window)) collage.classList.add("is-in");
+    else new IntersectionObserver(([en], obs) => { if (en.isIntersecting) { collage.classList.add("is-in"); obs.disconnect(); } }, { threshold: 0.2 }).observe(collage);
   }
 
-  /* journal: masonry that keeps reading order, plus look filters */
+  /* looks page: a vertical mood board (balanced columns, reading order kept) with look filters */
   const grid = document.querySelector("[data-masonry]");
   if (grid) {
     const cards = [...grid.children];
     let cols = 0;
+    const ratio = el => el.dataset.ratio ? parseFloat(el.dataset.ratio) : (() => { const im = el.querySelector("img"); return im.height / im.width; })();
     const layout = force => {
       const w = document.documentElement.clientWidth;
       const n = w <= 760 ? 2 : w <= 1100 ? 3 : 4;
       if (n === cols && !force) return;
       cols = n;
-      const columns = Array.from({ length: n }, () => Object.assign(document.createElement("div"), { className: "journal-col" }));
+      const columns = Array.from({ length: n }, () => Object.assign(document.createElement("div"), { className: "board-col" }));
       const h = new Array(n).fill(0);
       cards.forEach(card => {
         if (card.hidden) { columns[0].appendChild(card); return; }
-        const im = card.querySelector("img");
         const i = h.indexOf(Math.min(...h));
         columns[i].appendChild(card);
-        h[i] += im.height / im.width + 0.16;
+        h[i] += ratio(card) + 0.03;
       });
       grid.replaceChildren(...columns);
     };
+    addEventListener("resize", () => layout(false));
     const buttons = [...document.querySelectorAll("[data-filters] .filter")];
     const panels = [...document.querySelectorAll("[data-panel]")];
     const apply = key => {

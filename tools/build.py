@@ -169,26 +169,34 @@ def edits(site, by_id, looks):
 
 
 def looks_grid(site, shown):
-    """The Looks as a sliding strip of photographs (auto-drifts, swipeable, pausable)."""
-    lk = {l["key"]: l for l in site["looks"]}
-    def slide(p, dup):
+    """The Looks: a soft panel beside a tilted, slowly drifting wall of photographs."""
+    looks = [l for l in site["looks"] if any(p["look"] == l["key"] for p in shown)]
+    lk = {l["key"]: l for l in looks}
+    leads = [next(p for p in shown if p["look"] == l["key"]) for l in looks]
+    pool = leads + [p for p in shown if p not in leads]
+    ncol = 5
+    cols = [pool[i::ncol] for i in range(ncol)]
+    focus = site["features"].get("focus", {})
+    def tile(p):
         l = lk[p["look"]]
-        hide = ' aria-hidden="true" tabindex="-1"' if dup else ""
-        return (f'<a class="slide" href="looks.html#{l["key"]}"{hide}>'
-                f'<img src="{P}/{p["id"]}-800.webp" width="{p["width"]}" height="{p["height"]}" loading="lazy" decoding="async" alt="{"" if dup else e(p["alt"])}">'
+        fp = focus.get(p["id"])
+        style = f' style="object-position:{fp}"' if fp else ""
+        return (f'<a class="tile" href="looks.html#{l["key"]}" tabindex="-1">'
+                f'<img src="{P}/{p["id"]}-800.webp" width="{p["width"]}" height="{p["height"]}" loading="lazy" decoding="async" alt=""{style}>'
                 f'<span>Look {num(l)}</span></a>')
-    once = "".join(slide(p, False) for p in shown)
-    twice = "".join(slide(p, True) for p in shown)
-    return f'''<section class="looks-strip" id="looks">
-  <div class="strip-head reveal">
+    columns = "".join(
+        f'<div class="collage-col collage-col--{i % 2}" style="--dur:{70 + i * 9}s"><div class="collage-track">'
+        f'{"".join(tile(p) for p in col)}{"".join(tile(p) for p in col)}</div></div>'
+        for i, col in enumerate(cols))
+    return f'''<section class="collage-section" id="looks" data-collage>
+  <div class="collage-copy reveal">
+    <img class="collage-mark" src="assets/va-black.png" alt="">
     <h2><span class="script">the</span>LOOKS</h2>
-    <div class="strip-note"><p>{len(site["looks"])} looks, {len(shown)} photographs. Select a photograph to see its look.</p>
-    <a class="text-link" href="looks.html">See all looks <span>↗</span></a></div>
+    <p class="collage-lede">{len(looks)} looks, {len(shown)} photographs.</p>
+    <a class="text-link" href="looks.html">See all looks <span>↗</span></a>
   </div>
-  <div class="strip-frame" data-strip>
-    <div class="strip" data-strip-scroll><div class="strip-track">{once}{twice}</div></div>
-    <button class="strip-toggle" data-strip-toggle aria-pressed="false" aria-label="Pause the sliding photographs"><span class="i-pause"></span><span class="i-play"></span></button>
-  </div>
+  <div class="collage-stage"><div class="collage" aria-hidden="true">{columns}</div></div>
+  <button class="collage-toggle" data-collage-toggle aria-pressed="false" aria-label="Pause the moving photographs"><span class="i-pause"></span><span class="i-play"></span></button>
 </section>'''
 
 
@@ -229,12 +237,46 @@ def journal(site, shown):
     <a class="text-link" href="{MSG}" target="_blank" rel="noopener">Ask about Look {num(l)} <span>↗</span></a>
   </div>''' for l in looks)
     lk = {l["key"]: l for l in looks}
-    cards = "".join(
-        f'<figure class="journal-card" data-kind="{p["look"]}" data-full="{P}/{p["id"]}-1600.webp" '
-        f'data-kicker="{p["id"]} / Look {num(lk[p["look"]])}" data-title="{e(p["title"])}" tabindex="0">'
-        f'{img(p, "(max-width:760px) 46vw, 24vw")}'
-        f'<figcaption><span>{p["id"]} / Look {num(lk[p["look"]])}</span><b>{e(p["title"])}</b></figcaption></figure>'
-        for p in shown)
+    # a vertical mood board: photographs at their natural shape, with a colour swatch per look
+    def palette(look_key):
+        from PIL import Image
+        ps = [p for p in shown if p["look"] == look_key][:3]
+        cols = []
+        for p in ps:
+            im = Image.open(os.path.join(ROOT, P, f'{p["id"]}-800.webp')).convert("RGB")
+            w, h = im.size
+            cols.append(im.crop((int(w * .3), int(h * .35), int(w * .7), int(h * .85))))
+        strip = Image.new("RGB", (sum(c.width for c in cols), max(c.height for c in cols)))
+        x = 0
+        for c in cols:
+            strip.paste(c, (x, 0)); x += c.width
+        import colorsys
+        q = strip.resize((120, 120)).quantize(colors=10, method=Image.Quantize.MEDIANCUT)
+        pal = q.getpalette()[:30]
+        def score(item):
+            cnt, i = item
+            r, g, bl = pal[i * 3:i * 3 + 3]
+            _, l, s = colorsys.rgb_to_hls(r / 255, g / 255, bl / 255)
+            return cnt * (0.35 + s) * (0.4 + min(l, 1 - l))  # favour garment colour over grey streets
+        picked = sorted(q.getcolors(), key=score, reverse=True)[:4]
+        rgb = [tuple(pal[i * 3:i * 3 + 3]) for _, i in picked]
+        rgb.sort(key=lambda c: -(0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]))
+        return [f"#{r:02x}{g:02x}{bl:02x}" for r, g, bl in rgb]
+    items = []
+    n = 0
+    for l in looks:
+        photos = [p for p in shown if p["look"] == l["key"]]
+        for k, p in enumerate(photos):
+            n += 1
+            items.append(
+                f'<figure class="board-tile" data-kind="{p["look"]}" data-full="{P}/{p["id"]}-1600.webp" '
+                f'data-kicker="{n:02d} / Look {num(l)}" data-title="{e(p["title"])}" tabindex="0">'
+                f'{img(p, "(max-width:760px) 46vw, 24vw")}'
+                f'<figcaption><span>{n:02d} / Look {num(l)}</span><b>{e(p["title"])}</b></figcaption></figure>')
+            if k == min(1, len(photos) - 1):
+                bands = "".join(f'<i style="background:{c}"></i>' for c in (l.get("palette") or palette(l["key"])))
+                items.append(f'<div class="board-swatch" data-kind="{l["key"]}" data-ratio="1.15" aria-hidden="true">{bands}<em>Look {num(l)}</em></div>')
+    cards = "".join(items)
     return f'''<section class="journal">
   <div class="journal-head">
     <div><p class="kicker">{e(site["story"]["title"])}</p><h1>The<br><i>Looks.</i></h1></div>
@@ -242,7 +284,7 @@ def journal(site, shown):
   </div>
   <div class="journal-filters" aria-label="Filter by look" data-filters>{"".join(filters)}</div>
   {panels}
-  <div class="journal-grid" data-masonry>{cards}</div>
+  <div class="board"><div class="board-grid" data-masonry>{cards}</div></div>
   <div class="journal-foot"><span>The URIAH visual journal</span><span>{total} photographs / {len(looks):02d} looks</span></div>
 </section>'''
 

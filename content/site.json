@@ -8,7 +8,8 @@
    "01": "14% 70%",
    "23": "50% 70%",
    "27": "55% 65%",
-   "16": "40% 60%"
+   "16": "40% 60%",
+   "31": "33% 62%"
   },
   "hero": [
    "18"
@@ -403,6 +404,12 @@
    "pieces": [
     "Blush crinkle camisole",
     "Floral wide-leg trousers"
+   ],
+   "palette": [
+    "#ecd3cc",
+    "#cf9f9c",
+    "#8e7f8c",
+    "#3e3a3c"
    ]
   },
   {
@@ -411,6 +418,12 @@
    "pieces": [
     "Black draped blouse",
     "Lilac floral wide-leg trousers"
+   ],
+   "palette": [
+    "#cdbbd9",
+    "#9d86b0",
+    "#5c4a63",
+    "#1b1a1c"
    ]
   },
   {
@@ -419,6 +432,12 @@
    "pieces": [
     "Navy tiered strapless top",
     "Black wide-leg trousers"
+   ],
+   "palette": [
+    "#7f9bc9",
+    "#3d5a8a",
+    "#1f2f55",
+    "#26262a"
    ]
   },
   {
@@ -427,6 +446,12 @@
    "pieces": [
     "Mauve silk ruffle top",
     "Floral shorts"
+   ],
+   "palette": [
+    "#efc3cb",
+    "#c88a96",
+    "#a9bfe0",
+    "#7a4a55"
    ]
   },
   {
@@ -435,6 +460,12 @@
    "pieces": [
     "Mauve camisole",
     "Patterned midi skirt"
+   ],
+   "palette": [
+    "#efe9e2",
+    "#c4a7b2",
+    "#7a6468",
+    "#2f2a2c"
    ]
   },
   {
@@ -443,6 +474,12 @@
    "pieces": [
     "Puff-sleeve top with woven bodice",
     "Satin wide-leg trousers"
+   ],
+   "palette": [
+    "#efe3d4",
+    "#d6bfa5",
+    "#a68b73",
+    "#6f5e4f"
    ]
   },
   {
@@ -451,6 +488,12 @@
    "pieces": [
     "Woven top with sheer lace sleeves",
     "Black split skirt"
+   ],
+   "palette": [
+    "#d9a774",
+    "#8f5e3d",
+    "#56311e",
+    "#1c1411"
    ]
   }
  ],
