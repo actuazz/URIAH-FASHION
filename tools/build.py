@@ -142,6 +142,15 @@ def hero(site, by_id):
 </section>'''
 
 
+def edit_img(ed, p):
+    """An edit may use a hand-made crop (ed["crop"] = file stem in assets/photos) to focus on the model."""
+    c = ed.get("crop")
+    if not c:
+        return img(p, "(max-width:760px) 100vw, 44vw", ed.get("focus"))
+    return (f'<img src="{P}/{c}-1200.webp" srcset="{P}/{c}-800.webp 800w, {P}/{c}-1200.webp 1200w" '
+            f'sizes="(max-width:760px) 100vw, 44vw" width="1200" height="1500" loading="lazy" decoding="async" alt="{e(p["alt"])}">')
+
+
 def edits(site, by_id, looks):
     f = site["features"]
     h = f["edits_head"]
@@ -149,7 +158,7 @@ def edits(site, by_id, looks):
     for i, ed in enumerate(f["edits"]):
         p, look = by_id[ed["photo"]], looks[ed["look"]]
         image = (f'<div class="edit-image reveal"><a href="looks.html#{look["key"]}" aria-label="See {e(look["name"])}">'
-                 f'{img(p, "(max-width:760px) 100vw, 44vw", ed.get("focus"))}</a><span class="image-no">Look {num(look)}</span></div>')
+                 f'{edit_img(ed, p)}</a><span class="image-no">Look {num(look)}</span></div>')
         copy = f'''<div class="edit-copy reveal">
       <span class="overline">{e(ed["overline"])} / {i + 1:02d}</span>
       <h3>{two_line(ed["title"])}</h3>
