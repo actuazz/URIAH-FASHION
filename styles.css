@@ -330,3 +330,9 @@ body{background:var(--beige)!important;color:var(--ink)}
 .filter.is-active{color:var(--royal)!important}.filter.is-active::after{background:var(--plum)!important}
 .filter sup{color:var(--terracotta)!important}
 .board{background:#f6f1e8!important}
+
+/* subtle silk texture over the beige surfaces (multiplied, so each section keeps its own colour) */
+body,.edits,.details,.order,.journal{background-image:url(assets/textures/silk.webp)!important;background-size:600px!important;background-blend-mode:multiply!important}
+.edits{background-color:var(--paper)!important}
+/* an edit photo shown whole, uncropped */
+.edit-image--natural img{aspect-ratio:auto;height:auto}

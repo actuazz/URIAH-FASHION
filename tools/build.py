@@ -95,7 +95,7 @@ def footer(site):
     <div class="footer-brand"><a href="index.html"><img src="assets/va-black.png" alt=""><img src="assets/wordmark-black.png" alt="URIAH"></a><p>Elevated wear.<br>Everyday essentials.</p></div>
     <div class="footer-col"><b>Explore</b><a href="index.html#edits">The edits</a><a href="looks.html">The looks</a><a href="index.html#order">How to order</a></div>
     <div class="footer-col"><b>Connect</b><a href="{MSG}" target="_blank" rel="noopener">Message us ↗</a><a href="{FB}" target="_blank" rel="noopener">Facebook ↗</a></div>
-    <div class="footer-col"><b>A note from the house</b><p>Thoughtful style, considered for everyday life.</p></div>
+    <div class="footer-col"><b>A note from the house</b><p>Elevated style in everyday life.</p></div>
   </div>
   <div class="footer-bottom"><span>© <span data-year></span> URIAH</span><span>Philippines</span><a href="#top">Back to top ↑</a></div>
 </footer>'''
@@ -157,7 +157,7 @@ def edits(site, by_id, looks):
     rows = []
     for i, ed in enumerate(f["edits"]):
         p, look = by_id[ed["photo"]], looks[ed["look"]]
-        image = (f'<div class="edit-image reveal"><a href="looks.html#{look["key"]}" aria-label="See {e(look["name"])}">'
+        image = (f'<div class="edit-image{" edit-image--natural" if ed.get("natural") else ""} reveal"><a href="looks.html#{look["key"]}" aria-label="See {e(look["name"])}">'
                  f'{edit_img(ed, p)}</a><span class="image-no">Look {num(look)}</span></div>')
         copy = f'''<div class="edit-copy reveal">
       <span class="overline">{e(ed["overline"])} / {i + 1:02d}</span>
