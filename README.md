@@ -33,3 +33,12 @@ from the default branch, root folder).
 
 A brand and catalogue site: no cart, checkout or payments. Enquiries go to the
 official URIAH Facebook page.
+
+## Daily Facebook post
+
+A scheduled task posts one photo to the URIAH Facebook page every day at 4:30 pm
+(Philippine time). `python3 tools/next_post.py` prints that day's post; the
+rotation and captions live in `content/social.json`, and the images (JPEG) in
+`assets/social/`. Photos repeat in a 29-day cycle, never the same outfit two
+days running. Images are served from this public repository on
+raw.githubusercontent.com.

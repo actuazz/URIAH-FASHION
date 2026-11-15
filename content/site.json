@@ -79,6 +79,19 @@
   "signature": {
    "kicker": "our signature",
    "line": "For the way you move, the way you live, and the person you choose to be."
+  },
+  "upcoming": {
+   "new": {
+    "kicker": "New arrivals",
+    "title": "New outfits,|on the way.",
+    "text": "A new collection is being photographed. Follow us on Facebook to see each look first, as it arrives."
+   },
+   "muse": {
+    "kicker": "Coming soon",
+    "title": "Meet|the muse.",
+    "text": "An introduction to the women who wear URIAH, and the stories behind each look."
+   },
+   "_todo": "REMINDER: replace the 'muse' card with a real introduction of the model(s): name, a short bio, a portrait photo."
   }
  },
  "photos": [

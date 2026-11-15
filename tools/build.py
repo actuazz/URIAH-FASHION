@@ -218,6 +218,26 @@ def signature(site):
 </section>'''
 
 
+def upcoming(site):
+    """Two notices: new outfits on the way, and the model introduction (to be written)."""
+    u = site["features"].get("upcoming")
+    if not u:
+        return ""
+    return f'''<section class="upcoming" id="new">
+  <div class="upcoming-card reveal">
+    <p class="kicker">{e(u["new"]["kicker"])}</p>
+    <h2>{two_line(u["new"]["title"])}</h2>
+    <p>{e(u["new"]["text"])}</p>
+    <a class="text-link" href="{FB}" target="_blank" rel="noopener">Follow on Facebook <span>↗</span></a>
+  </div>
+  <div class="upcoming-card upcoming-card--muse reveal">
+    <p class="kicker">{e(u["muse"]["kicker"])}</p>
+    <h2>{two_line(u["muse"]["title"])}</h2>
+    <p>{e(u["muse"]["text"])}</p>
+  </div>
+</section>'''
+
+
 def order():
     return f'''<section class="order" id="order">
   <div><p class="script">a personal enquiry</p><h2>How to<br><i>order.</i></h2></div>
@@ -303,7 +323,7 @@ def build():
     by_id = {p["id"]: p for p in site["photos"]}
     looks = {l["key"]: l for l in site["looks"]}
     shown = [p for p in site["photos"] if not p.get("hidden")]
-    home = "\n".join([hero(site, by_id), edits(site, by_id, looks), looks_grid(site, shown), signature(site), order()])
+    home = "\n".join([hero(site, by_id), edits(site, by_id, looks), looks_grid(site, shown), signature(site), upcoming(site), order()])
     with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(page(f'URIAH — {site["story"]["title"]}', True, home, site))
     with open(os.path.join(ROOT, "looks.html"), "w", encoding="utf-8") as fh:
