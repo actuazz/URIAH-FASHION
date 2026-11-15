@@ -288,3 +288,45 @@ body.is-locked{overflow:hidden}
 .board-swatch i{flex:1}
 .board-swatch em{position:absolute;right:10px;bottom:8px;font-style:normal;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.9);text-shadow:0 1px 6px rgba(0,0,0,.35)}
 @media (max-width:760px){.board{padding:8px;border-radius:12px}.board-grid,.board-col{gap:8px}}
+
+/* ===== Theme: beige / midnight blue / terracotta / plum (chosen Nov 2026) ===== */
+:root{--beige:#efe7da;--beige-deep:#e4d9c6;--royal:#16233f;--royal-ink:#16233f;--deep:#16233f;--terracotta:#b8603d;--plum:#5c2b4b;--ink:#1b1a1f;--muted:#5e584f;
+ --paper:var(--beige);--white:#f6f1e8;--gold:var(--terracotta);--gold-text:var(--terracotta);--grain:none;--blush:var(--royal)}
+body,.edits,.details,.order,.journal,.footer,.menu,.site-header.is-solid,.collage-section{background-image:none!important}
+body{background:var(--beige)!important;color:var(--ink)}
+.site-header.is-solid{background:rgba(239,231,218,.96)!important;border-bottom:1px solid rgba(22,35,63,.14)!important}
+.script{font:500 11px/1.4 var(--sans)!important;letter-spacing:.32em!important;text-transform:uppercase!important;margin-bottom:18px!important;display:block}
+.hero .script{color:#fff!important}
+.overline{color:var(--terracotta)!important;letter-spacing:.28em!important}
+.kicker,.look-no{color:var(--terracotta)!important}
+.edit-copy h3,.details h2,.order h2,.journal-head h1{color:var(--ink)!important}
+.edit-copy p,.order li p,.collage-lede{color:var(--muted)!important}
+.edit-aside{color:#8d8577!important}.image-no{display:none}
+.text-link{border-color:var(--deep)!important;color:var(--deep)!important}.text-link span{color:var(--terracotta)!important}
+/* the looks: royal blue panel */
+.collage-section{background:var(--royal)!important}
+.collage-section::after{background:linear-gradient(90deg,var(--royal) 10%,transparent)!important}
+.collage-copy h2{color:#f6f1e8!important}.collage-copy h2 .script{color:#d99a7d!important;font-size:11px!important;margin:0 0 18px!important}
+.collage-lede{color:#c9cfdb!important}
+.collage-section .text-link{color:#f6f1e8!important;border-color:#d99a7d!important}.collage-section .text-link span{color:#d99a7d!important}
+.collage-mark{filter:invert(1) brightness(2)!important;opacity:.95!important}
+.collage-toggle{background:rgba(255,255,255,.18)!important}
+/* signature: lighter beige, plum line */
+.details{background:#f6f1e8!important}
+.details .script{color:var(--plum)!important}
+.signature-quote{color:var(--plum)!important}
+/* how to order: deeper beige, royal button */
+.order{background:var(--beige-deep)!important}
+.order .script{color:var(--terracotta)!important}
+.order li span{color:var(--terracotta)!important}.order li{border-color:rgba(27,26,31,.12)!important}
+.message-button{background:var(--royal)!important}.message-button:hover{background:var(--plum)!important}
+/* footer: royal blue */
+.footer{background:var(--royal-ink)!important;border:0}
+.footer *{color:#e9e3d8!important;border-color:rgba(255,255,255,.14)!important}
+.footer-col b{color:#d99a7d!important}
+.footer-brand img{filter:invert(1) brightness(2)}
+/* looks page */
+.journal{background:var(--beige)!important}
+.filter.is-active{color:var(--royal)!important}.filter.is-active::after{background:var(--plum)!important}
+.filter sup{color:var(--terracotta)!important}
+.board{background:#f6f1e8!important}

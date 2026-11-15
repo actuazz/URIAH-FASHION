@@ -124,3 +124,79 @@
     if (ev.key === "ArrowRight") show(cur + 1);
   });
 })();
+
+/* EMBLEM (placeholder, to be redesigned): an animated URIAH monogram field behind the signature quote */
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const va = new Image(); va.src = "assets/va-black.png";
+  let paused = reduce;
+  const tinted = {};
+  function tint(color){                      // the monogram drawn in any colour
+    if (tinted[color]) return tinted[color];
+    const c = document.createElement("canvas"); c.width = va.width; c.height = va.height;
+    const x = c.getContext("2d"); x.drawImage(va,0,0); x.globalCompositeOperation="source-in"; x.fillStyle=color; x.fillRect(0,0,c.width,c.height);
+    return (tinted[color] = c);
+  }
+  function field(canvas, pal, alpha, threads){
+    const ctx = canvas.getContext("2d");
+    const GAP = 116;                         // lattice spacing in CSS px
+    let w=0,h=0,dpr=1,items=[],t0=performance.now(),drift=0;
+    const ptr = {x:-1e4,y:-1e4,on:false}, ripples=[];
+    function layout(){
+      dpr = Math.min(2, devicePixelRatio||1);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = Math.round(w*dpr); canvas.height = Math.round(h*dpr);
+      items = [];
+      const cols = Math.ceil(w/GAP)+3, rows = Math.ceil(h/(GAP*.5))+3;
+      for (let r=-1;r<rows;r++) for (let c=-1;c<cols;c++){
+        const kind = ((r%3)+3)%3===0 ? 0 : (((r+c)%2===0) ? 1 : 2);   // rows of monograms, then diamonds and points
+        items.push({bx:c*GAP+(r%2?GAP/2:0), by:r*GAP*.5, kind, rot:0, s:1, a:0});
+      }
+    }
+    function draw(now){
+      const dt = Math.min(50, now - t0); t0 = now;
+      if (!paused) drift = (drift + dt*0.012) % GAP;               // slow diagonal drift
+      ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+      for (const rp of ripples) rp.r += dt*0.45;
+      while (ripples.length && ripples[0].r > Math.hypot(w,h)) ripples.shift();
+      if (threads){                                   // fine diagonal threads that weave through the lattice
+        ctx.save(); ctx.globalAlpha = alpha*0.9; ctx.lineWidth = 0.6;
+        const off = drift % GAP;
+        for (let k=-Math.ceil(h/GAP)-2; k<Math.ceil(w/GAP)+3; k++){
+          const x0 = k*GAP + off;
+          ctx.strokeStyle = k%2 ? pal.diamond : pal.mono;
+          ctx.beginPath(); ctx.moveTo(x0, -GAP); ctx.lineTo(x0 + h + 2*GAP, h + GAP); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(x0 + h + GAP, -GAP); ctx.lineTo(x0 - GAP, h + GAP); ctx.stroke();
+        }
+        ctx.restore();
+      }
+      for (const it of items){
+        const x = (it.bx + drift) % (Math.ceil(w/GAP+2)*GAP) - GAP, y = (it.by + drift*.5) % (Math.ceil(h/(GAP*.5)+2)*GAP*.5) - GAP*.5;
+        const d = Math.hypot(x-ptr.x, y-ptr.y);
+        const near = ptr.on ? Math.max(0, 1 - d/170) : 0;
+        let wave = 0; for (const rp of ripples){ const k = 1 - Math.abs(Math.hypot(x-rp.x,y-rp.y) - rp.r)/60; if (k>0) wave = Math.max(wave, k*(1-rp.r/900)); }
+        const lift = Math.max(near, wave);
+        const ease = paused && !ptr.on && !ripples.length ? 1 : 0.12;
+        it.rot += ((it.kind===1 ? lift*Math.PI/2 : lift*0.35) - it.rot)*ease;
+        it.s   += ((1 + lift*0.35) - it.s)*ease;
+        it.a   += ((alpha + lift*alpha*2.6) - it.a)*ease;
+        ctx.save(); ctx.translate(x,y); ctx.rotate(it.rot); ctx.scale(it.s,it.s); ctx.globalAlpha = Math.min(1,it.a);
+        if (it.kind===0 && va.complete){ const img = tint(pal.mono), W=30, H=W*img.height/img.width; ctx.drawImage(img,-W/2,-H/2,W,H); }
+        else if (it.kind===1){ ctx.strokeStyle=pal.diamond; ctx.lineWidth=1.1; ctx.beginPath(); ctx.moveTo(0,-9); ctx.lineTo(7,0); ctx.lineTo(0,9); ctx.lineTo(-7,0); ctx.closePath(); ctx.stroke(); }
+        else { ctx.fillStyle=pal.dot; ctx.beginPath(); ctx.arc(0,0,1.6,0,Math.PI*2); ctx.fill(); }
+        ctx.restore();
+      }
+      requestAnimationFrame(draw);
+    }
+    canvas.addEventListener("pointermove", e => { const r = canvas.getBoundingClientRect(); ptr.x=e.clientX-r.left; ptr.y=e.clientY-r.top; ptr.on=true; });
+    canvas.addEventListener("pointerleave", () => { ptr.on=false; });
+    canvas.addEventListener("pointerdown", e => { const r = canvas.getBoundingClientRect(); if (!reduce) ripples.push({x:e.clientX-r.left, y:e.clientY-r.top, r:0}); });
+    addEventListener("resize", layout);
+    const go = () => { layout(); requestAnimationFrame(draw); };
+    va.complete ? go() : va.addEventListener("load", go, { once: true });
+  }
+  const sec=document.querySelector("#signature"); if (!sec) return; sec.style.position="relative"; sec.style.overflow="hidden";
+  const cv=document.createElement("canvas"); cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0";
+  sec.prepend(cv); [...sec.children].forEach(c=>{ if(c!==cv){ c.style.position="relative"; c.style.zIndex="1"; }});
+  field(cv, {mono:"#16233f", diamond:"#b8603d", dot:"#5c2b4b"}, 0.15, false);
+})();
